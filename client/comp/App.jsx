@@ -1,5 +1,6 @@
 // npm packages
 import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
 function App() {
@@ -15,9 +16,9 @@ function App() {
   
 
   return (
-    <div style={{display: 'flex', fontFamily: 'Open Sans, sans-serif'}}>
+    <div>
       {currentView}
-      {music}
+      <Button>Bootstrap Working?</Button>
     </div>
   );
 }
