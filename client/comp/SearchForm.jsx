@@ -22,7 +22,7 @@ export default function SearchForm({ searchOnApi }) {
         <Form.Group>
           <Form.Control id='artist' type="string" placeholder="Artist Name" value={artist} onChange={handleOnChange}/>
           <Form.Control id='title' type="string" placeholder="Song Title" value={title} onChange={handleOnChange} />
-          <Button variant="outline-info" size="sm" onClick={()=>{searchOnApi(title, artist)}}>Search</Button>
+          <Button variant="outline-info" size="sm" onClick={()=>{searchOnApi(artist, title)}}>Search</Button>
         </Form.Group>
       </Form>
     </div>
