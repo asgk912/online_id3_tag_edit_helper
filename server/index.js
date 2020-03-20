@@ -4,7 +4,6 @@ const path = require('path');
 const morgan = require('morgan');
 const axios = require('axios');
 const NodeID3 = require('node-id3');
-const apiConfig = require('./api_config.js');
 
 // set up server
 var app = express();
@@ -37,7 +36,6 @@ app.get('/api/v1/file', (req, res) => {
     title: "I CHANGED IT",
     artist: "I CHANGED IT",
     album: "I CHANGED IT",
-    TRCK: "27"
   }
 
   NodeID3.write(tags, audioBuffer, (err, newBuffer) => {
@@ -49,23 +47,20 @@ app.get('/api/v1/file', (req, res) => {
       res.set('Content-Disposition', `attachment; filename=${audioFileName}` );
       res.end(newBuffer);
     }
-  });  
+  });
 })
 
 app.get('/api/v1/search', (req, res) => {
   let config = {};
-  config.params = Object.assign({}, req.query);
-  config.headers = {
-    'Content-Type': 'application/json',
-    'Authorization': apiConfig.token
-  }
+  config.params = {
+    media: 'music',
+    // entity: 'attribute=artistTerm,songTerm',
+  };
+  config.params = Object.assign(config.params, req.query);
 
-  console.log(config, '\n');
-
-  axios.get('https://api.spotify.com/v1/search', config)
-    .then((spotifyRes) => {
-      console.log(spotifyRes.data)
-      res.sendStatus(200);
+  axios.get('https://itunes.apple.com/search', config)
+    .then((iTunesRes) => {
+      res.json(iTunesRes.data);
     })
     .catch((e) => {
       console.log(e);
