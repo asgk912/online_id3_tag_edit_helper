@@ -29,6 +29,6 @@ export default function SearchForm({ searchOnApi }) {
   )
 }
 
-SearchForm.proptypes = {
+SearchForm.propTypes = {
   searchOnApi: PropTypes.func
 };

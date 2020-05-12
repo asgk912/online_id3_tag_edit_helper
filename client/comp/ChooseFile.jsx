@@ -18,7 +18,7 @@ const ChooseFile = React.forwardRef(
   }
 );
 
-ChooseFile.proptypes = {
+ChooseFile.propTypes = {
   uploadFileOnClick: PropTypes.func
 }
 
