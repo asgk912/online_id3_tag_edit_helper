@@ -5,42 +5,28 @@ import Welcome from './Welcome.jsx';
 import TwoMethods from './TwoMethods.jsx';
 
 export default function App() {
-  const [page, setPage] = useState(0);
+  const [step, setStep] = useState(0);
 
-  let pageControlOnClick = (e) => {
-    if(e.target.parentElement.className.includes('welcome')){
-      setPage(0);
-      return null;
-    }
-    if(e.target.parentElement.className.includes('recognition')){
-      setPage(1);
-      return null;
-    }
-    if(e.target.parentElement.className.includes('onlineSearch')){
-      setPage(2);
-      return null;
-    }
-    /*
-    switch(e.target.parentElement.className){
+  let stepControlOnClick = (e) => {
+    switch(e.target.id){
       case 'welcome':
-        
+        setStep(1);
         break;
       case 'recognition':
-        setPage(1);
+        setStep(1);
         break;
       case 'onelineSearch':
-        setPage(2);
+        setStep(2);
         break;
       default:
-        setPage(0);
+        setStep(0);
     }
-    */
   }
 
   return (
     <div>
-      {page === 0 ? <Welcome pageControlOnClick={pageControlOnClick}/>
-                  : <TwoMethods page={page} pageControlOnClick={pageControlOnClick} />}
+      {step === 0 ? <Welcome stepControlOnClick={stepControlOnClick}/>
+                  : <TwoMethods step={step} stepControlOnClick={stepControlOnClick} />}
     </div>
   );
 }
