@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-const universalColor = '#17A2B8';
+const themeColor = '#17A2B8';
 
 export const AppIcon = styled.i`
-  color: ${universalColor};
+  color: ${themeColor};
 `
 /*
   Welcome.jsx
@@ -16,7 +16,7 @@ export const Title = styled.h1`
 export const InfoContainer = styled.div`
   width: 800px;
   margin: auto;
-  border: 3px solid ${universalColor};
+  border: 3px solid ${themeColor};
   padding: 10px 15px;
   border-radius: 8px;
 `;
@@ -28,16 +28,33 @@ export const WelcomeButtonContainer = styled.div`
 `;
 
 export const WelcomeButton = styled.button`
-  text-align: center;
   margin: auto;
   width: 65%;
   border-width: 2px;
   border-radius: 8px;
-  border-color: ${universalColor};
-  color: ${universalColor};
+  border-color: ${themeColor};
+  color: ${themeColor};
+  text-align: center;
 
   &:hover {
-    background-color: ${universalColor};
+    background-color: ${themeColor};
     color: #ffffff;
   }
+`;
+
+/*
+  NavigationBar.jsx
+*/
+export const NavBar = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  padding-top: 12px;
+  text-align: center;
+  background-color: #dddddd;
+`;
+
+export const ColoredNumber = styled.span`
+  font-size: 36px;
+  color: ${themeColor};
 `;
