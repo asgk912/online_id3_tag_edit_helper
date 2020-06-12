@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 // submodules
 import Welcome from './Welcome.jsx';
-import TwoMethods from './TwoMethods.jsx';
+import EditWindow from './EditWindow.jsx';
 
 export default function App() {
   const [step, setStep] = useState(0);
@@ -26,7 +26,7 @@ export default function App() {
   return (
     <div>
       {step === 0 ? <Welcome stepControlOnClick={stepControlOnClick}/>
-                  : <TwoMethods step={step} stepControlOnClick={stepControlOnClick} />}
+                  : <EditWindow step={step} stepControlOnClick={stepControlOnClick} />}
     </div>
   );
 }
