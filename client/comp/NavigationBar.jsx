@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // style
 import { NavBar, ColoredNumber } from './style.jsx';
 
-export default function NavigationBar({ step }) {
+export default function NavigationBar({ step, dispControlOnClick }) {
   const [stepStatus, setStepStatus] = useState([step===1, step===2, step===3, step===4]);
 
   let controlColoring = (e) => {
@@ -35,16 +35,11 @@ export default function NavigationBar({ step }) {
       <ColoredNumber className="material-icons">more_horiz</ColoredNumber>
       {stepStatus[1] ? <ColoredNumber className="material-icons" onMouseEnter={controlColoring}>looks_two</ColoredNumber> :
                     <ColoredNumber className="material-icons-outlined" onMouseLeave={controlColoring}>looks_two</ColoredNumber>}
-      {/* <ColoredNumber className="material-icons">more_horiz</ColoredNumber>
-      <ColoredNumber className="material-icons">looks_3</ColoredNumber>
-      <ColoredNumber className="material-icons-outlined">looks_3</ColoredNumber>
-      <ColoredNumber className="material-icons">more_horiz</ColoredNumber>
-      <ColoredNumber className="material-icons">looks_4</ColoredNumber>
-      <ColoredNumber className="material-icons-outlined">looks_4</ColoredNumber> */}
     </NavBar>
   );
 }
 
 NavigationBar.propTypes = {
   step: PropTypes.number,
+  dispControlOnClick: PropTypes.func
 };

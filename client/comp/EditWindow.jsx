@@ -1,16 +1,20 @@
 // node packages
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+// submodules
+import NavigationBar from './NavigationBar.jsx';
 
-export default function EditWindow({ step, stepControlOnClick }) {
+export default function EditWindow({ dispControlOnClick }) {
+  const [step, setStep] = useState(1);
+
   return (
     <div>
-      EDIT HELPER {step}
+      <NavigationBar step={step} dispControlOnClick={dispControlOnClick} />
+      <div>Edit Window</div>
     </div>
   );
 }
 
 EditWindow.propTypes = {
-  step: PropTypes.number,
-  stepControlOnClick: PropTypes.func
+  dispControlOnClick: PropTypes.func
 };

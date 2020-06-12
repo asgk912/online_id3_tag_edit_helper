@@ -5,28 +5,25 @@ import Welcome from './Welcome.jsx';
 import EditWindow from './EditWindow.jsx';
 
 export default function App() {
-  const [step, setStep] = useState(0);
+  const [display, setDisplay] = useState(true);
 
-  let stepControlOnClick = (e) => {
+  let dispControlOnClick = (e) => {
     switch(e.target.id){
       case 'welcome':
-        setStep(1);
+        setDisplay(false);
         break;
-      case 'recognition':
-        setStep(1);
-        break;
-      case 'onelineSearch':
-        setStep(2);
+      case 'editWindow':
+        setDisplay(true);
         break;
       default:
-        setStep(0);
+        setDisplay(true);
     }
   }
 
   return (
     <div>
-      {step === 0 ? <Welcome stepControlOnClick={stepControlOnClick}/>
-                  : <EditWindow step={step} stepControlOnClick={stepControlOnClick} />}
+      {display ? <Welcome dispControlOnClick={dispControlOnClick} />
+              : <EditWindow dispControlOnClick={dispControlOnClick} />}
     </div>
   );
 }
