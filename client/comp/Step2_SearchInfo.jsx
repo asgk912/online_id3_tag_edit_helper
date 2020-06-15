@@ -1,25 +1,24 @@
 // node packages
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 // styled components
 import { StepIcon } from './style.jsx';
 //submodule
 import SearchForm from './SearchForm.jsx';
 
-export default function Step2_SearchInfo( {step, setStep, nextStepOnClick} ) {
+export default function Step2_SearchInfo({ step, searchOnITunesAPI }) {
   
   let iconTheme = (step === 2) ? "material-icons" : "material-icons-outlined";
 
   return (
     <div>
       <h5><StepIcon className={iconTheme} instList={true}>looks_two</StepIcon>Search Information</h5>
-      <SearchForm setStep={setStep} nextStepOnClick={nextStepOnClick} />
+      <SearchForm searchOnITunesAPI={searchOnITunesAPI} />
     </div>
   );
 }
 
 Step2_SearchInfo.propTypes = {
   step: PropTypes.number,
-  setStep: PropTypes.func,
-  nextStepOnClick: PropTypes.func
+  searchOnITunesAPI: PropTypes.func
 }
