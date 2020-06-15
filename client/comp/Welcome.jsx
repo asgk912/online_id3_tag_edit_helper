@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Title, ColoredIcon, InfoContainer, WelcomeButtonContainer, WelcomeButton } from './style.jsx';
 
 // React element
-export default function Welcome({ dispControlOnClick }) {
+export default function Welcome({ pageControlOnClick }) {
   return (
     <div>
       <Title><ColoredIcon className="material-icons-outlined" style={{fontSize: '48px'}}>library_music</ColoredIcon> Online ID3 Tag Edit Helper</Title>
@@ -22,7 +22,7 @@ export default function Welcome({ dispControlOnClick }) {
           <li>Download update version of audio file</li>
         </ol>
         <WelcomeButtonContainer>
-          <WelcomeButton id='welcome' onClick={dispControlOnClick}>Start</WelcomeButton>
+          <WelcomeButton id='welcome' onClick={pageControlOnClick}>Start</WelcomeButton>
         </WelcomeButtonContainer>
       </InfoContainer>
     </div>
@@ -30,5 +30,5 @@ export default function Welcome({ dispControlOnClick }) {
 }
 
 Welcome.propTypes = {
-  dispControlOnClick: PropTypes.func
+  pageControlOnClick: PropTypes.func
 };

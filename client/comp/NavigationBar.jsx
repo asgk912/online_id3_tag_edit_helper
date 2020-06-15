@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // styled components
-import { NavBar, AppIcon, ColoredIcon } from './style.jsx';
+import { NavBar, ColoredIcon } from './style.jsx';
 
 export default function NavigationBar({ step }) {
   return (

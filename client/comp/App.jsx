@@ -5,25 +5,25 @@ import Welcome from './Welcome.jsx';
 import EditWindow from './EditWindow.jsx';
 
 export default function App() {
-  const [display, setDisplay] = useState(true);
+  const [page, setPage] = useState(true);
 
-  let dispControlOnClick = (e) => {
+  let pageControlOnClick = (e) => {
     switch(e.target.id){
       case 'welcome':
-        setDisplay(false);
+        setPage(false);
         break;
       case 'editWindow':
-        setDisplay(true);
+        setPage(true);
         break;
       default:
-        setDisplay(true);
+        setPage(true);
     }
   }
 
   return (
     <div>
-      {display ? <Welcome dispControlOnClick={dispControlOnClick} />
-              : <EditWindow dispControlOnClick={dispControlOnClick} />}
+      {page ? <Welcome pageControlOnClick={pageControlOnClick} />
+              : <EditWindow pageControlOnClick={pageControlOnClick} />}
     </div>
   );
 }
