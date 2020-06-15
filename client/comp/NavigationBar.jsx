@@ -1,8 +1,8 @@
 // node packages
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// style
-import { NavBar, ColoredNumber } from './style.jsx';
+// styled components
+import { NavBar, AppIcon, ColoredIcon } from './style.jsx';
 
 export default function NavigationBar({ step, dispControlOnClick }) {
   const [stepStatus, setStepStatus] = useState([step===1, step===2, step===3, step===4]);
@@ -30,11 +30,19 @@ export default function NavigationBar({ step, dispControlOnClick }) {
 
   return (
     <NavBar>
-      {stepStatus[0] ? <ColoredNumber className="material-icons step1" onMouseEnter={controlColoring}>looks_one</ColoredNumber> :
-                    <ColoredNumber className="material-icons-outlined step1" onMouseLeave={controlColoring}>looks_one</ColoredNumber>}
-      <ColoredNumber className="material-icons">more_horiz</ColoredNumber>
-      {stepStatus[1] ? <ColoredNumber className="material-icons" onMouseEnter={controlColoring}>looks_two</ColoredNumber> :
-                    <ColoredNumber className="material-icons-outlined" onMouseLeave={controlColoring}>looks_two</ColoredNumber>}
+      <ColoredIcon className="material-icons-outlined" style={{position: 'absolute', left: '20px', top: '10px'}}>library_music</ColoredIcon>
+      {/* <AppIcon className='far fa-file-audio' style={{position: 'absolute', left: '20px', top: '10px'}}/> */}
+      {stepStatus[0] ? <ColoredIcon className="material-icons step1" onMouseEnter={controlColoring}>looks_one</ColoredIcon> :
+                    <ColoredIcon className="material-icons-outlined step1" onMouseLeave={controlColoring}>looks_one</ColoredIcon>}
+      <ColoredIcon className="material-icons">more_horiz</ColoredIcon>
+      {stepStatus[1] ? <ColoredIcon className="material-icons" onMouseEnter={controlColoring}>looks_two</ColoredIcon> :
+                    <ColoredIcon className="material-icons-outlined" onMouseLeave={controlColoring}>looks_two</ColoredIcon>}
+      <ColoredIcon className="material-icons">more_horiz</ColoredIcon>
+      {stepStatus[2] ? <ColoredIcon className="material-icons" onMouseEnter={controlColoring}>looks_3</ColoredIcon> :
+                    <ColoredIcon className="material-icons-outlined" onMouseLeave={controlColoring}>looks_3</ColoredIcon>}
+      <ColoredIcon className="material-icons">more_horiz</ColoredIcon>
+      {stepStatus[3] ? <ColoredIcon className="material-icons" onMouseEnter={controlColoring}>looks_4</ColoredIcon> :
+                    <ColoredIcon className="material-icons-outlined" onMouseLeave={controlColoring}>looks_4</ColoredIcon>}
     </NavBar>
   );
 }
