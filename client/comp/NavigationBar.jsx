@@ -13,21 +13,21 @@ export default function NavigationBar({ step, pageControlOnClick }) {
   }
 
   return (
-    <NavBar>
+    <NavBar id="navigationBar">
       {musicIcon ? <MusicIcon className="material-icons-outlined" fs="36px" onMouseEnter={changeMusicIconOnMouse}>library_music</MusicIcon> :
                   <OverlayTrigger placement="right" overlay={<Tooltip>Back to the welcome page.</Tooltip>} >
                     <MusicIcon className="material-icons" fs="36px" onClick={pageControlOnClick} onMouseLeave={changeMusicIconOnMouse}>library_music</MusicIcon>
                   </OverlayTrigger>}
-      {step === 0 ? <StepIcon className="material-icons step1">looks_one</StepIcon> :
-                    <StepIcon className="material-icons-outlined step1">looks_one</StepIcon>}
+      {step === 1 ? <StepIcon className="material-icons">looks_one</StepIcon> :
+                    <StepIcon className="material-icons-outlined">looks_one</StepIcon>}
       <StepIcon className="material-icons">more_horiz</StepIcon>
-      {step === 1 ? <StepIcon className="material-icons">looks_two</StepIcon> :
+      {step === 2 ? <StepIcon className="material-icons">looks_two</StepIcon> :
                     <StepIcon className="material-icons-outlined">looks_two</StepIcon>}
       <StepIcon className="material-icons">more_horiz</StepIcon>
-      {step === 2 ? <StepIcon className="material-icons">looks_3</StepIcon> :
+      {step === 3 ? <StepIcon className="material-icons">looks_3</StepIcon> :
                     <StepIcon className="material-icons-outlined">looks_3</StepIcon>}
       <StepIcon className="material-icons">more_horiz</StepIcon>
-      {step === 3 ? <StepIcon className="material-icons">looks_4</StepIcon> :
+      {step === 4 ? <StepIcon className="material-icons">looks_4</StepIcon> :
                     <StepIcon className="material-icons-outlined">looks_4</StepIcon>}
     </NavBar>
   );
