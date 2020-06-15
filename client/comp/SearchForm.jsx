@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-export default function SearchForm({ searchOnApi }) {
+export default function SearchForm({ setStep, nextStepOnClick }) {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
 
@@ -14,15 +15,33 @@ export default function SearchForm({ searchOnApi }) {
     }
   };
 
+  let searchOnAPI = (artist, title) => {
+    let config = {}
+    config.params = {
+      term: `${artist.trim()} ${title.trim()}`
+    }
+    axios.get('/api/v1/search', config)
+      .then((res) => {
+        console.log(res.data);
+        setStep(3);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  let onEnterPressed = (e) => {
+    if (e.key === 'Enter' && artist && title) {
+      searchOnAPI(artist, title);
+    }
+  }
+
   return (
     <div>
-      <br />
-      <h4>Search Song by Title and Artist</h4>
+      <h6>Search Song by Title and Artist</h6>
       <Form>
         <Form.Group>
-          <Form.Control id='artist' type="string" placeholder="Artist Name" value={artist} onChange={handleOnChange}/>
-          <Form.Control id='title' type="string" placeholder="Song Title" value={title} onChange={handleOnChange} />
-          <Button variant="outline-info" size="sm" onClick={()=>{searchOnApi(artist, title)}}>Search</Button>
+          <Form.Control id='artist' type="string" placeholder="Artist Name" required value={artist} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
+          <Form.Control id='title' type="string" placeholder="Song Title" required value={title} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
+          <Button variant="outline-info" size="sm" onClick={()=>{searchOnAPI(artist, title)}}>Search</Button>
         </Form.Group>
       </Form>
     </div>
@@ -30,5 +49,6 @@ export default function SearchForm({ searchOnApi }) {
 }
 
 SearchForm.propTypes = {
-  searchOnApi: PropTypes.func
+  setStep: PropTypes.func,
+  nextStepOnClick: PropTypes.func
 };
