@@ -8,7 +8,7 @@ import { Title, MusicIcon, InfoContainer, WelcomeButtonContainer, WelcomeButton 
 export default function Welcome({ pageControlOnClick }) {
   return (
     <div>
-      <Title><MusicIcon className="material-icons-outlined" fs={"48px"}>library_music</MusicIcon> Online ID3 Tag Edit Helper</Title>
+      <Title><MusicIcon className="material-icons-outlined" fs="48px">library_music</MusicIcon> Online ID3 Tag Edit Helper</Title>
       <InfoContainer>
         <p>Welcome! This is an web application, which will help you edit ID3 tags of your audio file.</p>
         <ol>
