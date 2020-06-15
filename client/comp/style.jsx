@@ -14,10 +14,8 @@ export const MusicIcon = styled.span`
 `;
 
 export const StepIcon = styled.span`
-  ${props => props.navbar ? '' :
-    `position: relative;
-      top: 10px;`
-  }
+  ${props => props.instList ? `position: relative;
+                              top: 10px;` : ''}
   font-size: 36px;
   color: ${themeColor};
 `;

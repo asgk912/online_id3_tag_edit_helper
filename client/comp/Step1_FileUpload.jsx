@@ -36,7 +36,7 @@ export default function Step1_FileUpload( {step, setStep} ) {
  
   return (
     <div>
-      <h5><StepIcon className={iconTheme} navbar={false}>looks_one</StepIcon>Upload audio file you want edit</h5>
+      <h5><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</h5>
       <Form>
         <Form.Group controlId="audioFilePath">
           <Form.Control ref={fileInputRef} type="file" accept="audio/*" onChange={enableButtonOnChange}/>
