@@ -7,17 +7,8 @@ import EditWindow from './EditWindow.jsx';
 export default function App() {
   const [page, setPage] = useState(true);
 
-  let pageControlOnClick = (e) => {
-    switch(e.target.id){
-      case 'welcome':
-        setPage(false);
-        break;
-      case 'editWindow':
-        setPage(true);
-        break;
-      default:
-        setPage(true);
-    }
+  let pageControlOnClick = () => {
+    setPage(!page);
   }
 
   return (
