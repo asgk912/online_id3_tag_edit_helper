@@ -2,13 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // style
-import { Title, ColoredIcon, InfoContainer, WelcomeButtonContainer, WelcomeButton } from './style.jsx';
+import { Title, MusicIcon, InfoContainer, WelcomeButtonContainer, WelcomeButton } from './style.jsx';
 
 // React element
 export default function Welcome({ pageControlOnClick }) {
   return (
     <div>
-      <Title><ColoredIcon className="material-icons-outlined" style={{fontSize: '48px'}}>library_music</ColoredIcon> Online ID3 Tag Edit Helper</Title>
+      <Title><MusicIcon className="material-icons-outlined" fs={"48px"}>library_music</MusicIcon> Online ID3 Tag Edit Helper</Title>
       <InfoContainer>
         <p>Welcome! This is an web application, which will help you edit ID3 tags of your audio file.</p>
         <ol>

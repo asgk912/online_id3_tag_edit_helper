@@ -2,9 +2,23 @@ import styled from 'styled-components';
 
 const themeColor = '#17A2B8';
 
-export const AppIcon = styled.i`
+export const MusicIcon = styled.span`
+  ${props => props.fs === '48px' ? "font-size: 48px;" :
+    (`font-size: 36px;
+      position: absolute;
+      left: 20px;
+      top: 10px;
+    `)
+  }
   color: ${themeColor};
-`
+`;
+// style={{position: 'absolute', left: '20px', top: '10px'}}
+
+export const StepIcon = styled.span`
+  font-size: 36px;
+  color: ${themeColor};
+`;
+
 /*
   Welcome.jsx
 */
@@ -52,9 +66,4 @@ export const NavBar = styled.div`
   padding-top: 12px;
   text-align: center;
   background-color: #dddddd;
-`;
-
-export const ColoredNumber = styled.span`
-  font-size: 36px;
-  color: ${themeColor};
 `;
