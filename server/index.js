@@ -60,7 +60,7 @@ app.get('/api/v1/search', (req, res) => {
 
   axios.get('https://itunes.apple.com/search', config)
     .then((iTunesRes) => {
-      res.json(iTunesRes.data);
+      res.json(iTunesRes.data.results);
     })
     .catch((e) => {
       console.log(e);
