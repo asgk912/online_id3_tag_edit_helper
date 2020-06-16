@@ -25,8 +25,8 @@ export default function SearchForm({ searchOnITunesAPI }) {
       <h6>Search Song by Title and Artist</h6>
       <Form>
         <Form.Group>
-          <Form.Control id='artist' type="string" placeholder="Artist Name" required value={artist} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
-          <Form.Control id='title' type="string" placeholder="Song Title" required value={title} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
+          <Form.Control required id='title' type="string" placeholder="Song Title" value={title} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
+          <Form.Control id='artist' type="string" placeholder="Artist Name" value={artist} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
           <Button variant="outline-info" size="sm" onClick={()=>{searchOnITunesAPI(artist, title)}}>Search</Button>
         </Form.Group>
       </Form>
