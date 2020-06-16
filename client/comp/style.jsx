@@ -2,9 +2,15 @@ import styled from 'styled-components';
 
 const themeColor = '#17A2B8';
 
+/*
+  Commonly Used Style
+*/
+
 export const MusicIcon = styled.span`
   ${props => props.fs === '48px' ? 
-    'font-size: 48px;' :
+    `font-size: 48px;
+      position: relative;
+      top: 10px;` :
     `font-size: 36px;
       position: absolute;
       left: 20px;
@@ -23,9 +29,11 @@ export const StepIcon = styled.span`
 /*
   Welcome.jsx
 */
-export const Title = styled.h1`
+export const Title = styled.div`
   margin: 20px auto;
   text-align: center;
+  font-size: 40px;
+  font-weight: bold;
 `;
 
 export const InfoContainer = styled.div`
