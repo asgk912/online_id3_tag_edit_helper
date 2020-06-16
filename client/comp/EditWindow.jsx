@@ -7,10 +7,12 @@ import NavigationBar from './NavigationBar.jsx';
 import Step1_FileUpload from './Step1_FileUpload.jsx';
 import Step2_SearchInfo from './Step2_SearchInfo.jsx';
 import Step3_SelectTags from './Step3_SelectTags.jsx';
+// style
+import { StepsContainer } from './style.jsx';
 
 export default function EditWindow({ pageControlOnClick }) {
   const [step, setStep] = useState(2);
-  let searchedData = null;
+  const [infoData, setInfoData] = useState([{title: undefined}]);
 
   // let nextStepOnClick = () => {
   //   setStep(step+1);
@@ -23,26 +25,27 @@ export default function EditWindow({ pageControlOnClick }) {
     }
     axios.get('/api/v1/search', config)
       .then((res) => {
-        searchedData = Array(res.data.length);
+        var temp = Array(res.data.length);
 
-        for(var i=0; i<searchedData.length; i++) {
-          searchedData[i] = {};
+        for(var i=0; i<temp.length; i++) {
+          temp[i] = {};
 
-          // general info
-          searchedData[i].artist = res.data[i].artistName;
-          searchedData[i].album = res.data[i].collectionName;
-          searchedData[i].title = res.data[i].trackName;
-          searchedData[i].date = res.data[i].releaseDate;
-          searchedData[i].genre = res.data[i].primaryGenreName;
-          searchedData[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
-          searchedData[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
+          // morph general info
+          temp[i].artist = res.data[i].artistName;
+          temp[i].album = res.data[i].collectionName;
+          temp[i].title = res.data[i].trackName;
+          temp[i].date = res.data[i].releaseDate.substring(0,10);
+          temp[i].genre = res.data[i].primaryGenreName;
+          temp[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
+          temp[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
 
-          // url related
-          searchedData[i].artistViewUrl = res.data[i].artistViewUrl;
-          searchedData[i].trackViewUrl = res.data[i].trackViewUrl;
-          searchedData[i].image = res.data[i].artworkUrl100;
+          // morph url related
+          temp[i].artistViewUrl = res.data[i].artistViewUrl;
+          temp[i].trackViewUrl = res.data[i].trackViewUrl;
+          temp[i].image = res.data[i].artworkUrl100;
         }
 
+        setInfoData(temp);
         setStep(3);
       })
       .catch((e) => console.log(e));
@@ -51,10 +54,12 @@ export default function EditWindow({ pageControlOnClick }) {
   return (
     <div>
       <NavigationBar step={step} pageControlOnClick={pageControlOnClick} />
-      <Step1_FileUpload step={step} setStep={setStep} />
-      {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
-      {(step > 2) ? <Step3_SelectTags step={step} searchedData={searchedData} /> : ''}
-      {(step > 3) ? <div>Step 4</div> : ''}
+      <StepsContainer>
+        <Step1_FileUpload step={step} setStep={setStep} />
+        {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
+        {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} /> : ''}
+        {(step > 3) ? <div>Step 4</div> : ''}
+      </StepsContainer>
     </div>
   );
 }

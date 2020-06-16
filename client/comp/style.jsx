@@ -37,7 +37,8 @@ export const Title = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-  width: 800px;
+  box-sizing: border-box;
+  width: 600px;
   margin: auto;
   border: 3px solid ${themeColor};
   padding: 10px 15px;
@@ -66,6 +67,15 @@ export const WelcomeButton = styled.button`
 `;
 
 /*
+  EditWindow.jsx
+*/
+export const StepsContainer = styled.div`
+  box-sizing: border-box;
+  width: 600px;
+  margin: auto;
+`;
+
+/*
   NavigationBar.jsx
 */
 export const NavBar = styled.div`
@@ -76,3 +86,4 @@ export const NavBar = styled.div`
   text-align: center;
   background-color: #dddddd;
 `;
+
