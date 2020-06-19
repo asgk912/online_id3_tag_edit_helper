@@ -7,22 +7,20 @@ import NavigationBar from './NavigationBar.jsx';
 import Step1_FileUpload from './Step1_FileUpload.jsx';
 import Step2_SearchInfo from './Step2_SearchInfo.jsx';
 import Step3_SelectTags from './Step3_SelectTags.jsx';
+import Step4_Download from './Step4_Download.jsx';
 // style
 import { StepsContainer } from './style.jsx';
 
 export default function EditWindow({ pageControlOnClick }) {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
-
-  // let nextStepOnClick = () => {
-  //   setStep(step+1);
-  // }
 
   let searchOnITunesAPI = (artist, title) => {
     let config = {}
     config.params = {
       term: `${artist.trim()} ${title.trim()}`
     }
+
     axios.get('/api/v1/search', config)
       .then((res) => {
         var temp = Array(res.data.length);
@@ -57,8 +55,8 @@ export default function EditWindow({ pageControlOnClick }) {
       <StepsContainer>
         <Step1_FileUpload step={step} setStep={setStep} />
         {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
-        {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} /> : ''}
-        {(step > 3) ? <div>Step 4</div> : ''}
+        {(step > 2) ? <Step3_SelectTags step={step} setStep={setStep} infoData={infoData} /> : ''}
+        {(step > 3) ? <Step4_Download step={step} pageControlOnClick={pageControlOnClick} /> : ''}
       </StepsContainer>
     </div>
   );
