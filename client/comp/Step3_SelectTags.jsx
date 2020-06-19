@@ -2,11 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Accordion } from 'react-bootstrap';
-// styled components
-import { StepIcon } from './style.jsx';
 // submodule
 import AccordianCard from './AccordianCard.jsx';
+// css style realated
+import { Accordion } from 'react-bootstrap';
+import { StepIcon } from './style.jsx';
 
 export default function Step3_SelectTags({ step, setStep, infoData }) {
   let iconTheme = (step === 3) ? "material-icons" : "material-icons-outlined";

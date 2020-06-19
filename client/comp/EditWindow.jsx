@@ -8,7 +8,7 @@ import Step1_FileUpload from './Step1_FileUpload.jsx';
 import Step2_SearchInfo from './Step2_SearchInfo.jsx';
 import Step3_SelectTags from './Step3_SelectTags.jsx';
 import Step4_Download from './Step4_Download.jsx';
-// style
+// css style related
 import { StepsContainer } from './style.jsx';
 
 export default function EditWindow({ pageControlOnClick }) {

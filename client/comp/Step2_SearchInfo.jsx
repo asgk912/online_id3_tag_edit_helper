@@ -1,10 +1,10 @@
 // node packages
 import React from 'react';
 import PropTypes from 'prop-types';
-// styled components
-import { StepIcon } from './style.jsx';
 //submodule
 import SearchForm from './SearchForm.jsx';
+// css style related
+import { StepIcon } from './style.jsx';
 
 export default function Step2_SearchInfo({ step, searchOnITunesAPI }) {
   

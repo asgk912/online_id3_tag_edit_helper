@@ -1,9 +1,9 @@
 // node packages
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-// styled components
+// css style related
+import { Form, Button } from 'react-bootstrap';
 import { StepIcon } from './style.jsx';
 
 export default function Step1_FileUpload( {step, setStep} ) {

@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+// css style
 import { Button } from 'react-bootstrap'
-// styled components
 import { StepIcon } from './style.jsx';
 
 export default function Step4_Download({ step, pageControlOnClick }) {
@@ -11,7 +11,7 @@ export default function Step4_Download({ step, pageControlOnClick }) {
 
   let downloadOnClick = () => {
     axios.get('/api/v1/file')
-      .then((res) => {
+      .then(() => {
         window.open('/api/v1/file');
         pageControlOnClick();
       })
