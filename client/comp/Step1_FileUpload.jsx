@@ -31,7 +31,12 @@ export default function Step1_FileUpload( {step, setStep} ) {
   }
 
   let enableButtonOnChange = () => {
-    setButtonDisabled(false)
+    if(fileInputRef.current.files.length === 1) {
+      setButtonDisabled(false)
+    } else {
+      setButtonDisabled(true);
+    }
+    
   }
  
   return (
