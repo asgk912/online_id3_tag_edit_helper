@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 //submodule
 import SearchForm from './SearchForm.jsx';
 // css style related
-import { StepIcon, SingleStepContainer } from './style.jsx';
+import { StepIcon,
+        SingleStepContainer,
+        SingleStepTitle, 
+        SingleStepContents} from './style.jsx';
 
 export default function Step2_SearchInfo({ step, searchOnITunesAPI }) {
   
@@ -12,8 +15,10 @@ export default function Step2_SearchInfo({ step, searchOnITunesAPI }) {
 
   return (
     <SingleStepContainer>
-      <h5><StepIcon className={iconTheme} instList={true}>looks_two</StepIcon>Search Information</h5>
-      <SearchForm searchOnITunesAPI={searchOnITunesAPI} />
+      <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_two</StepIcon>Search Song Information</SingleStepTitle>
+      <SingleStepContents>
+        <SearchForm searchOnITunesAPI={searchOnITunesAPI} />
+      </SingleStepContents>
     </SingleStepContainer>
   );
 }

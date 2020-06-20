@@ -6,7 +6,9 @@ import axios from 'axios';
 import AccordianCard from './AccordianCard.jsx';
 // css style realated
 import { Accordion } from 'react-bootstrap';
-import { StepIcon, SingleStepContainer } from './style.jsx';
+import { StepIcon,
+        SingleStepContainer,
+        SingleStepTitle } from './style.jsx';
 
 export default function Step3_SelectTags({ step, setStep, infoData }) {
   let iconTheme = (step === 3) ? "material-icons" : "material-icons-outlined";
@@ -21,8 +23,8 @@ export default function Step3_SelectTags({ step, setStep, infoData }) {
 
   return (
     <SingleStepContainer>
-      <h5><StepIcon className={iconTheme} instList={true}>looks_3</StepIcon>Select Tags</h5>
-      <div style={{height: '750px', overflowY: 'auto'}}>
+      <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_3</StepIcon>Select Tags</SingleStepTitle>
+      <div style={{height: '500px', overflowY: 'auto'}}>
         <Accordion>
           {infoData.map((info, index) => <AccordianCard key={index} info={info} index={index} submitOnClick={submitOnClick}/>)}
         </Accordion>

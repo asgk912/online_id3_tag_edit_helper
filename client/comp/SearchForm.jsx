@@ -1,6 +1,9 @@
+// node packages
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Col, Button } from 'react-bootstrap';
+// css style related
+import { Form, Col } from 'react-bootstrap';
+import { NextStepButtonContainer, NextStepButton } from './style.jsx';
 
 export default function SearchForm({ searchOnITunesAPI }) {
   const [title, setTitle] = useState('');
@@ -32,12 +35,10 @@ export default function SearchForm({ searchOnITunesAPI }) {
               <Form.Control id='artist' type="string" placeholder="Artist Name" value={artist} onChange={handleOnChange} onKeyPress={onEnterPressed}/>
             </Col>
           </Form.Row>
-
-          <Form.Row>
-            <Button variant="outline-info" size="sm" onClick={()=>{searchOnITunesAPI(artist, title)}}>Search</Button>
-          </Form.Row>
-        
       </Form>
+      <NextStepButtonContainer>
+        <NextStepButton onClick={()=>{searchOnITunesAPI(artist, title)}}>Search</NextStepButton>
+      </NextStepButtonContainer>
     </div>
   )
 }

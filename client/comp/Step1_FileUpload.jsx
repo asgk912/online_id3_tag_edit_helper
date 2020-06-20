@@ -3,8 +3,13 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 // css style related
-import { Form, Button } from 'react-bootstrap';
-import { StepIcon, SingleStepContainer } from './style.jsx';
+import { StepIcon,
+        SingleStepContainer,
+        SingleStepTitle,
+        SingleStepContents, 
+        InputFileContainer,
+        NextStepButtonContainer,
+        NextStepButton } from './style.jsx';
 
 export default function Step1_FileUpload( {step, setStep} ) {
   let [buttonDisabled, setButtonDisabled ] = useState(true);
@@ -41,31 +46,18 @@ export default function Step1_FileUpload( {step, setStep} ) {
  
   return (
     <SingleStepContainer>
-      <h5><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</h5>
-      <Form>
-        <Form.Group controlId="audioFilePath">
-          <Form.Control ref={fileInputRef} type="file" accept="audio/*" onChange={enableButtonOnChange}/>
-        </Form.Group>
-        <Button variant="outline-info" size="sm" onClick={uploadFileOnClick} disabled={buttonDisabled}>Upload File</Button>
-      </Form>
+      <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</SingleStepTitle>
+      <SingleStepContents>
+        <InputFileContainer>
+          <input ref={fileInputRef} type="file" accept="audio/*" onChange={enableButtonOnChange}/>
+        </InputFileContainer>
+        <NextStepButtonContainer>
+          <NextStepButton onClick={uploadFileOnClick} disabled={buttonDisabled}>Upload File</NextStepButton>
+        </NextStepButtonContainer>
+      </SingleStepContents>
     </SingleStepContainer>
   )
 }
-// const ChooseFile = React.forwardRef(
-//   function cf({uploadFileOnClick}, ref) {
-//     return (
-//       <div>
-//         <h4>Choose an audio file to edit tags</h4>
-//         <Form>
-//           <Form.Group controlId="audioFilePath">
-//             <Form.Control ref={ref} type="file" accept="audio/*" />
-//           </Form.Group>
-//           <Button variant="outline-info" size="sm" onClick={uploadFileOnClick}>Upload File</Button>
-//         </Form>
-//       </div>
-//     )
-//   }
-// );
 
 Step1_FileUpload.propTypes = {
   step: PropTypes.number,

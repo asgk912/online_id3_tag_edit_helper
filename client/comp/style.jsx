@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const themeColor = '#17A2B8';
+const disabledColor = '#73c7d4';
 
 /*
   Styles used over different submodules
@@ -31,6 +32,41 @@ export const SingleStepContainer = styled.div`
   margin-bottom: 30px;
 `;
 
+export const SingleStepTitle = styled.div`
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 520;
+`;
+
+export const SingleStepContents = styled.div`
+  margin-left: 18px;
+`;
+
+export const NextStepButtonContainer = styled.div`
+  margin-top: 15px;
+  text-align: right;
+`;
+
+export const NextStepButton = styled.button`
+  width: 130px;
+  border-width: 1px;
+  border-radius: 3px;
+  border-color: ${themeColor};
+  color: ${themeColor};
+  text-align: center;
+  font-size: 14px;
+
+  &:disabled {
+    border-color: ${disabledColor};
+    color: ${disabledColor};
+  }
+
+  &:hover:enabled {
+    background-color: ${themeColor};
+    color: #ffffff;
+  }
+`;
+
 /*
   Welcome.jsx
 */
@@ -38,7 +74,7 @@ export const Title = styled.div`
   margin: 20px auto;
   text-align: center;
   font-size: 40px;
-  font-weight: bold;
+  font-weight: 520;
 `;
 
 export const InfoContainer = styled.div`
@@ -92,3 +128,48 @@ export const NavBar = styled.div`
   background-color: #dddddd;
 `;
 
+/*
+  Step1_FileUpload.jsx
+*/
+export const InputFileContainer = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+/*
+  AccordianCard.jsx
+*/
+export const ThumbnailContainer = styled.div`
+  width: 150px;
+  height: 150px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 2px solid #dedede;
+`;
+
+export const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+`;
+
+/*
+  Step4_DownloadFile.jsx
+*/
+
+export const LastStepButton = styled.button`
+  width: 180px;
+  height: 50px;
+  border-width: 2px;
+  border-radius: 3px;
+  border-color: ${themeColor};
+  color: ${themeColor};
+  text-align: center;
+  font-size: 20px;
+  font-weight: 520;
+
+  &:hover:enabled {
+    background-color: ${themeColor};
+    color: #ffffff;
+  }
+`;
