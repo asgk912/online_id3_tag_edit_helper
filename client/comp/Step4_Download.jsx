@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 // css style
 import { Button } from 'react-bootstrap'
-import { StepIcon } from './style.jsx';
+import { StepIcon, SingleStepContainer } from './style.jsx';
 
 export default function Step4_Download({ step, pageControlOnClick }) {
   let iconTheme = (step === 4) ? "material-icons" : "material-icons-outlined";
@@ -19,10 +19,10 @@ export default function Step4_Download({ step, pageControlOnClick }) {
   }
 
   return (
-    <div>
+    <SingleStepContainer>
       <h5><StepIcon className={iconTheme} instList={true}>looks_4</StepIcon>Download File</h5>
       <Button variant="outline-info" size="sm" onClick={downloadOnClick}>Download File</Button>
-    </div>
+    </SingleStepContainer>
   );
 }
 

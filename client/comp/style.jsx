@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const themeColor = '#17A2B8';
 
 /*
-  Commonly Used Style
+  Styles used over different submodules
 */
 
 export const MusicIcon = styled.span`
@@ -24,6 +24,11 @@ export const StepIcon = styled.span`
                               top: 10px;` : ''}
   font-size: 36px;
   color: ${themeColor};
+`;
+
+export const SingleStepContainer = styled.div`
+  margin-top: 30px;
+  margin-bottom: 30px;
 `;
 
 /*

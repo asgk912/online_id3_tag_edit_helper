@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 // css style related
 import { Form, Button } from 'react-bootstrap';
-import { StepIcon } from './style.jsx';
+import { StepIcon, SingleStepContainer } from './style.jsx';
 
 export default function Step1_FileUpload( {step, setStep} ) {
   let [buttonDisabled, setButtonDisabled ] = useState(true);
@@ -40,7 +40,7 @@ export default function Step1_FileUpload( {step, setStep} ) {
   }
  
   return (
-    <div>
+    <SingleStepContainer>
       <h5><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</h5>
       <Form>
         <Form.Group controlId="audioFilePath">
@@ -48,7 +48,7 @@ export default function Step1_FileUpload( {step, setStep} ) {
         </Form.Group>
         <Button variant="outline-info" size="sm" onClick={uploadFileOnClick} disabled={buttonDisabled}>Upload File</Button>
       </Form>
-    </div>
+    </SingleStepContainer>
   )
 }
 // const ChooseFile = React.forwardRef(
