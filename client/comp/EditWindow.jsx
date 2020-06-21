@@ -15,6 +15,7 @@ export default function EditWindow({ pageControlOnClick }) {
   // Hook
   const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
+  const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
 
 
   // Event Listners
@@ -55,7 +56,7 @@ export default function EditWindow({ pageControlOnClick }) {
           setInfoData(temp); // set infoData
           setStep(3); // go to step 3
         })
-        .catch((e) => console.log(e));
+        .catch((err) => console.log(err));
       }
   };
 
@@ -66,10 +67,32 @@ export default function EditWindow({ pageControlOnClick }) {
       method: 'post',
       data: selectedInfo
     })
-      .then((res) => {
+      .then(({ data }) => {
+        let extension = data.original.substring(data.original.length - 4)
+        let temp = {
+          original: data.original,
+          artistTitle: data.artist + ' - ' + data.title + extension,
+          extension: extension
+        }
+        setDLOption(temp)
         setStep(4);
       })
-      .catch((e) => console.log(e));
+      .catch((err) => console.log(err));
+  }
+
+  // for step 4: modify filename and download file
+  let downloadOnClick = (e, fileName) => {
+    if(fileName){
+      e.preventDefault();
+
+      axios({ // first send updated filename
+        url: '/api/v1/fileName',
+        method: 'post',
+        data: { fileName }
+      })
+        .then(()=> window.open('/api/v1/file')) // download file
+        .catch((err) => console.log(err));
+    }
   }
 
   return (
@@ -79,7 +102,7 @@ export default function EditWindow({ pageControlOnClick }) {
         <Step1_FileUpload step={step} setStep={setStep} />
         {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
         {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
-        {(step > 3) ? <Step4_Download step={step} pageControlOnClick={pageControlOnClick} /> : ''}
+        {(step > 3) ? <Step4_Download step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
       </StepsContainer>
     </div>
   );
