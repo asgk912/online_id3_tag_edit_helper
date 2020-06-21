@@ -11,7 +11,7 @@ import Step4_Download from './Step4_Download.jsx';
 // css style related
 import { StepsContainer } from './style.jsx';
 
-export default function EditWindow({ pageControlOnClick }) {
+export default function StepWindow({ pageControlOnClick }) {
   // Hook
   const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
@@ -108,6 +108,6 @@ export default function EditWindow({ pageControlOnClick }) {
   );
 }
 
-EditWindow.propTypes = {
+StepWindow.propTypes = {
   pageControlOnClick: PropTypes.func
 };

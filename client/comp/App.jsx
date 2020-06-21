@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 // submodules
 import Welcome from './Welcome.jsx';
-import EditWindow from './EditWindow.jsx';
+import StepWindow from './StepWindow.jsx';
 
 export default function App() {
   const [page, setPage] = useState(true);
@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div>
       {page ? <Welcome pageControlOnClick={pageControlOnClick} />
-              : <EditWindow pageControlOnClick={pageControlOnClick} />}
+              : <StepWindow pageControlOnClick={pageControlOnClick} />}
     </div>
   );
 }

@@ -114,7 +114,7 @@ export const WelcomeButton = styled.button`
 `;
 
 /*
-  EditWindow.jsx
+  StepWindow.jsx
 */
 export const StepsContainer = styled.div`
   box-sizing: border-box;
