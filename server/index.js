@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const morgan = require('morgan');
@@ -44,8 +43,8 @@ app.get('/api/v1/search', (req, res) => {
     .then((iTunesRes) => {
       res.json(iTunesRes.data.results);
     })
-    .catch((e) => {
-      console.log(e);
+    .catch((err) => {
+      console.log(err);
       res.sendStatus(500);
     });
 });
@@ -60,7 +59,7 @@ app.post('/api/v1/selection', (req, res) => {
         res.sendStatus(500);
       } else {
         audioBuffer = newAudioBuffer;
-        res.sendStatus(200);
+        res.json({original: audioFileName, artist: newTags.artist, title: newTags.title});
       }
     });
   }
@@ -76,16 +75,23 @@ app.post('/api/v1/selection', (req, res) => {
         console.log(newTags);
         editAndRespond(newTags, audioBuffer);
       })
-      .catch((e) => console.log(e));
+      .catch((err) => console.log(err));
   } else {
     console.log(newTags);
     editAndRespond(newTags, audioBuffer);
   }
 })
 
+app.post('/api/v1/fileName', (req, res) => {
+  audioFileName = req.body.fileName;
+  res.sendStatus(200);
+});
+
 app.get('/api/v1/file', (req, res) => {
-  res.set('Content-Type', audioMimeType);
-  res.set('Content-Disposition', `attachment; filename=${audioFileName}` );
+  res.set({
+    'Content-Type': audioMimeType,
+    'Content-Disposition': `attachment; filename=${audioFileName}`
+  });
   res.end(audioBuffer);
 });
 
