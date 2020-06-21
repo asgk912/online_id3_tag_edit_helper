@@ -22,7 +22,7 @@ app.use('/', express.static(path.join(__dirname, '../client/dist')));
 // to handle audio file post
 const upload = multer();
 
-var audioBuffer, audioFileName, audioMimeType, newTags;
+var audioBuffer, audioFileName, audioMimeType;
 
 app.post('/api/v1/file', upload.single('audio'), (req, res) => {
   audioBuffer = req.file.buffer;
@@ -51,17 +51,36 @@ app.get('/api/v1/search', (req, res) => {
 });
 
 app.post('/api/v1/selection', (req, res) => {
-  newTags = Object.assign({}, req.body);
-
-  NodeID3.write(newTags, audioBuffer, (err, newAudioBuffer) => {
-    if(err) {
-      console.log(err);
-      res.sendStatus(500);
-    } else {
-      audioBuffer = newAudioBuffer;
-      res.sendStatus(200);
-    }
-  });
+  let newTags = Object.assign({}, req.body);
+  
+  let editAndRespond = (tag, buffer) => {
+    NodeID3.write(tag, buffer, (err, newAudioBuffer) => {
+      if(err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        audioBuffer = newAudioBuffer;
+        res.sendStatus(200);
+      }
+    });
+  }
+  
+  if(newTags.image) { //if image url is selected, then change to buffer
+    axios({
+      url: newTags.image,
+      method: 'get',
+      responseType: 'arraybuffer'
+    })
+      .then((imgRes) => {
+        newTags.image = imgRes.data;
+        console.log(newTags);
+        editAndRespond(newTags, audioBuffer);
+      })
+      .catch((e) => console.log(e));
+  } else {
+    console.log(newTags);
+    editAndRespond(newTags, audioBuffer);
+  }
 })
 
 app.get('/api/v1/file', (req, res) => {
