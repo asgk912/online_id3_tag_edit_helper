@@ -12,18 +12,25 @@ import Step4_Download from './Step4_Download.jsx';
 import { StepsContainer } from './style.jsx';
 
 export default function EditWindow({ pageControlOnClick }) {
+  // Hook
   const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
 
-  // Event Listner passed down to Step 2
-  // send http request about search and sets infoData which will be passed down to step 3 
+
+  // Event Listners
+
+  // for Step 1: defined in step 1 submodule
+ 
+  // for Step 2: send http request about search and sets infoData which will be passed down to step 3 
   let searchOnITunesAPI = (e, artist, title) => {
     if(title) {
       e.preventDefault();
 
-      let options = {params: {term: `${artist.trim()} ${title.trim()}`}}
-
-      axios.get('/api/v1/search', options)
+      axios({
+        url:'/api/v1/search',
+        method: 'get',
+        params: {term: `${artist.trim()} ${title.trim()}`}
+      })
         .then((res) => {
           var temp = Array(res.data.length);
 
@@ -52,12 +59,16 @@ export default function EditWindow({ pageControlOnClick }) {
       }
   };
 
-  // Event Listner-like function passed down to Step 3
-  // send selected tag data to edit the id3 tag of uploade file
+  // for Step 3: send selected tag data to edit the id3 tag of uploade file
   let submitTagSelection = (selectedInfo) => {
-    axios.post('/api/v1/selection', selectedInfo)
-      .then(() => {
-        setStep(4);
+    axios({
+      url: '/api/v1/selection',
+      method: 'post',
+      data: selectedInfo
+    })
+      .then((res) => {
+        // setStep(4);
+        console.log(res.status);
       })
       .catch((e) => console.log(e));
   }
