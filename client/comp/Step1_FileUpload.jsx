@@ -12,21 +12,25 @@ import { StepIcon,
         NextStepButton } from './style.jsx';
 
 export default function Step1_FileUpload( {step, setStep} ) {
-  let [buttonDisabled, setButtonDisabled ] = useState(true);
-  let fileInputRef = useRef()
+  // Hook
+  let [buttonDisabled, setButtonDisabled] = useState(true); // handles disabled attribute of button
+  let fileInputRef = useRef(); // to reference file input type
   
   let iconTheme = (step === 1) ? "material-icons" : "material-icons-outlined";
 
+  // event listner
   let uploadFileOnClick = () => {
+    // set form data
     let data = new FormData();
     data.append('audio', fileInputRef.current.files[0]);
 
+    // post request with axios
     axios.post('/api/v1/file', data, {
       header: {
         'Content-Type': 'multipart/form-data',
       }
     })
-      .then(() => {
+      .then(() => { // on success, go to the next step and disable button
         setStep(2);
         setButtonDisabled(true);
       })
@@ -35,6 +39,7 @@ export default function Step1_FileUpload( {step, setStep} ) {
       }); 
   }
 
+  // event listner to disable/enable button
   let enableButtonOnChange = () => {
     if(fileInputRef.current.files.length === 1) {
       setButtonDisabled(false)
@@ -47,10 +52,12 @@ export default function Step1_FileUpload( {step, setStep} ) {
   return (
     <SingleStepContainer>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</SingleStepTitle>
+      
       <SingleStepContents>
         <InputFileContainer>
           <input ref={fileInputRef} type="file" accept="audio/*" onChange={enableButtonOnChange}/>
         </InputFileContainer>
+
         <NextStepButtonContainer>
           <NextStepButton onClick={uploadFileOnClick} disabled={buttonDisabled}>Upload File</NextStepButton>
         </NextStepButtonContainer>
