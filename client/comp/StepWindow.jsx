@@ -1,5 +1,5 @@
 // node packages
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 // submodules
@@ -17,10 +17,29 @@ export default function StepWindow({ pageControlOnClick }) {
   const [infoData, setInfoData] = useState([{title: undefined}]);
   const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
 
+  /*
+    Event Listners about http request
+  */
+  // for Step 1: upload file to server
+  let uploadFileOnClick = (e, fileInputRef, cb, cbIn) => {
+    e.preventDefault();
 
-  // Event Listners
+    // set form data
+    let data = new FormData();
+    data.append('audio', fileInputRef.current.files[0]);
 
-  // for Step 1: defined in step 1 submodule
+    // post request with axios
+    axios.post('/api/v1/file', data, {
+      header: {
+        'Content-Type': 'multipart/form-data',
+      }
+    })
+      .then(() => {
+        setStep(2); // go to next step
+        cb(cbIn);   // callback function will disable the button
+      })
+      .catch((err) => console.log(err)); 
+  }
  
   // for Step 2: send http request about search and sets infoData which will be passed down to step 3 
   let searchOnITunesAPI = (e, artist, title) => {
@@ -33,27 +52,27 @@ export default function StepWindow({ pageControlOnClick }) {
         params: {term: `${artist.trim()} ${title.trim()}`}
       })
         .then((res) => {
-          var temp = Array(res.data.length);
+          let morphed = Array(res.data.length);
 
-          for(var i=0; i<temp.length; i++) {
-            temp[i] = {};
+          for(var i=0; i<morphed.length; i++) {
+            morphed[i] = {};
 
             // morph general info
-            temp[i].artist = res.data[i].artistName;
-            temp[i].album = res.data[i].collectionName;
-            temp[i].title = res.data[i].trackName;
-            temp[i].year = res.data[i].releaseDate.substring(0,10);
-            temp[i].genre = res.data[i].primaryGenreName;
-            temp[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
-            temp[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
+            morphed[i].artist = res.data[i].artistName;
+            morphed[i].album = res.data[i].collectionName;
+            morphed[i].title = res.data[i].trackName;
+            morphed[i].year = res.data[i].releaseDate.substring(0,10);
+            morphed[i].genre = res.data[i].primaryGenreName;
+            morphed[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
+            morphed[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
 
             // morph url related
-            temp[i].artistViewUrl = res.data[i].artistViewUrl;
-            temp[i].trackViewUrl = res.data[i].trackViewUrl;
-            temp[i].image = res.data[i].artworkUrl100;
+            morphed[i].artistViewUrl = res.data[i].artistViewUrl;
+            morphed[i].trackViewUrl = res.data[i].trackViewUrl;
+            morphed[i].image = res.data[i].artworkUrl100;
           }
 
-          setInfoData(temp); // set infoData
+          setInfoData(morphed); // set infoData
           setStep(3); // go to step 3
         })
         .catch((err) => console.log(err));
@@ -69,12 +88,12 @@ export default function StepWindow({ pageControlOnClick }) {
     })
       .then(({ data }) => {
         let extension = data.original.substring(data.original.length - 4)
-        let temp = {
+        let option = {
           original: data.original,
           artistTitle: data.artist + ' - ' + data.title + extension,
           extension: extension
         }
-        setDLOption(temp)
+        setDLOption(option)
         setStep(4);
       })
       .catch((err) => console.log(err));
@@ -99,7 +118,7 @@ export default function StepWindow({ pageControlOnClick }) {
     <div>
       <NavigationBar step={step} pageControlOnClick={pageControlOnClick} />
       <StepsContainer>
-        <Step1_FileUpload step={step} setStep={setStep} />
+        <Step1_FileUpload step={step} uploadFileOnClick={uploadFileOnClick} />
         {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
         {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
         {(step > 3) ? <Step4_Download step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
