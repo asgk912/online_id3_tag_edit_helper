@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Accordion, Row, Col, Card } from 'react-bootstrap';
 import { ThumbnailContainer, Thumbnail, NextStepButtonContainer, NextStepButton} from './style.jsx';
 
-export default function AccordianCard({ info, index, submitOnClick }) {
+export default function AccordianCard({ info, index, submitTagSelection }) {
   let selectedInfo = {}
   selectedInfo.artist = info.artist;
   selectedInfo.title = info.title;
@@ -46,7 +46,7 @@ export default function AccordianCard({ info, index, submitOnClick }) {
             </Col>
           </Row>
           <NextStepButtonContainer>
-            <NextStepButton variant="outline-info" size="sm" onClick={()=> {submitOnClick(selectedInfo)}}>Submit Selection</NextStepButton>
+            <NextStepButton variant="outline-info" size="sm" onClick={()=> {submitTagSelection(selectedInfo)}}>Submit Selection</NextStepButton>
           </NextStepButtonContainer>
         </Card.Body>
       </Accordion.Collapse>
@@ -57,5 +57,5 @@ export default function AccordianCard({ info, index, submitOnClick }) {
 AccordianCard.propTypes = {
   info: PropTypes.object,
   index: PropTypes.number,
-  submitOnClick: PropTypes.func
+  submitTagSelection: PropTypes.func
 }

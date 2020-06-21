@@ -15,6 +15,8 @@ export default function EditWindow({ pageControlOnClick }) {
   const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
 
+  // Event Listner passed down to Step 2
+  // send http request about search and sets infoData which will be passed down to step 3 
   let searchOnITunesAPI = (e, artist, title) => {
     if(title) {
       e.preventDefault();
@@ -23,8 +25,6 @@ export default function EditWindow({ pageControlOnClick }) {
 
       axios.get('/api/v1/search', options)
         .then((res) => {
-          console.log(res.data);
-
           var temp = Array(res.data.length);
 
           for(var i=0; i<temp.length; i++) {
@@ -45,12 +45,22 @@ export default function EditWindow({ pageControlOnClick }) {
             temp[i].image = res.data[i].artworkUrl100;
           }
 
-          setInfoData(temp);
-          setStep(3);
+          setInfoData(temp); // set infoData
+          setStep(3); // go to step 3
         })
         .catch((e) => console.log(e));
       }
   };
+
+  // Event Listner-like function passed down to Step 3
+  // send selected tag data to edit the id3 tag of uploade file
+  let submitTagSelection = (selectedInfo) => {
+    axios.post('/api/v1/selection', selectedInfo)
+      .then(() => {
+        setStep(4);
+      })
+      .catch((e) => console.log(e));
+  }
 
   return (
     <div>
@@ -58,7 +68,7 @@ export default function EditWindow({ pageControlOnClick }) {
       <StepsContainer>
         <Step1_FileUpload step={step} setStep={setStep} />
         {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
-        {(step > 2) ? <Step3_SelectTags step={step} setStep={setStep} infoData={infoData} /> : ''}
+        {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
         {(step > 3) ? <Step4_Download step={step} pageControlOnClick={pageControlOnClick} /> : ''}
       </StepsContainer>
     </div>
