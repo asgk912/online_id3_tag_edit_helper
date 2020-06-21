@@ -162,6 +162,11 @@ export const Thumbnail = styled.img`
 /*
   Step4_DownloadFile.jsx
 */
+export const RadioTip = styled.div`
+  position: relative;
+  left: 22px;
+  font-weight: 520;
+`;
 
 export const LastStepButton = styled.button`
   width: 180px;

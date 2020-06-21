@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // css style related
+import { Form, InputGroup } from 'react-bootstrap'
 import { SingleStepContainer,
         SingleStepTitle,
         SingleStepSubTitle,
         StepIcon,
         SingleStepContents,
+        RadioTip,
         LastStepButton } from './style.jsx';
 
 export default function Step4_Download({ step, dlOption, downloadOnClick }) {
@@ -60,20 +62,29 @@ export default function Step4_Download({ step, dlOption, downloadOnClick }) {
           <div>
             <input className="radio-original" type="radio" name="dlOption" value="original" checked={radioStatus[0]} onChange={handleRadioOnEvents}/>
             <span className="radio-original" onClick={handleRadioOnEvents}>&nbsp; original file name:</span><br/>
-            <div className="radio-original" onClick={handleRadioOnEvents}>{dlOption.original}</div>
+            <RadioTip className="radio-original" onClick={handleRadioOnEvents}>{dlOption.original}</RadioTip>
           </div>
 
           <div>
             <input className="radio-artistTitle" type="radio" name="dlOption" value="artistTitle" checked={radioStatus[1]} onChange={handleRadioOnEvents}/>
             <span className="radio-artistTitle" onClick={handleRadioOnEvents}>&nbsp; (artist) - (title).(ext.):</span><br/>
-            <div className="radio-artistTitle" onClick={handleRadioOnEvents}>{dlOption.artistTitle}</div>
+            <RadioTip className="radio-artistTitle" onClick={handleRadioOnEvents}>{dlOption.artistTitle}</RadioTip>
           </div>
 
           <div>
             <input className="radio-customName" type="radio" name="dlOption" value="customName" checked={radioStatus[2]} onChange={handleRadioOnEvents}/>
             <span className="radio-customName" onClick={handleRadioOnEvents}>&nbsp; custom name:</span><br/>
-            <input className="radio-customName" type="text" required={radioStatus[2]} maxLength="40" size="40" value={customName} onChange={handleTextInputOnChange}/>
-            <span className="radio-customName">{dlOption.extension}</span>
+            
+            <RadioTip>
+              <InputGroup style={{width: '350px'}}>
+                <Form.Control className="radio-customName" type="string" required={radioStatus[2]} value={customName} onChange={handleTextInputOnChange}/>
+                <InputGroup.Append>
+                  <InputGroup.Text>{dlOption.extension}</InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+              {/* <input className="radio-customName" type="text" required={radioStatus[2]} maxLength="40" size="40" value={customName} onChange={handleTextInputOnChange}/>
+              <span className="radio-customName">{dlOption.extension}</span> */}
+            </RadioTip>
           </div>
         </form>
       </SingleStepContents>
