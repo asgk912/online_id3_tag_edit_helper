@@ -12,7 +12,7 @@ const port = 3000;
 app.set('port', port);
 
 // parsing and logging
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(morgan('dev'));
 
 // specify the directory of static files
