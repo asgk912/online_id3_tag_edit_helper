@@ -38,6 +38,12 @@ export const SingleStepTitle = styled.div`
   font-weight: 520;
 `;
 
+export const SingleStepSubTitle = styled.div`
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 520;
+`;
+
 export const SingleStepContents = styled.div`
   margin-left: 18px;
 `;

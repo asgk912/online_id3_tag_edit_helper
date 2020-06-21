@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // css style related
 import { Form, Col } from 'react-bootstrap';
-import { NextStepButtonContainer, NextStepButton } from './style.jsx';
+import { SingleStepSubTitle, NextStepButtonContainer, NextStepButton } from './style.jsx';
 
 export default function SearchForm({ searchOnITunesAPI }) {
   const [title, setTitle] = useState('');
@@ -19,7 +19,7 @@ export default function SearchForm({ searchOnITunesAPI }) {
 
   return (
     <div>
-      <h6>Search Song by Title (required) and Artist</h6>
+      <SingleStepSubTitle>Search Song by Title (required) and Artist</SingleStepSubTitle>
       <Form id="searchForm">
           <Form.Row>
             <Col>
