@@ -15,38 +15,41 @@ export default function EditWindow({ pageControlOnClick }) {
   const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
 
-  let searchOnITunesAPI = (artist, title) => {
-    let config = {}
-    config.params = {
-      term: `${artist.trim()} ${title.trim()}`
-    }
+  let searchOnITunesAPI = (e, artist, title) => {
+    if(title) {
+      e.preventDefault();
 
-    axios.get('/api/v1/search', config)
-      .then((res) => {
-        var temp = Array(res.data.length);
+      let options = {params: {term: `${artist.trim()} ${title.trim()}`}}
 
-        for(var i=0; i<temp.length; i++) {
-          temp[i] = {};
+      axios.get('/api/v1/search', options)
+        .then((res) => {
+          console.log(res.data);
 
-          // morph general info
-          temp[i].artist = res.data[i].artistName;
-          temp[i].album = res.data[i].collectionName;
-          temp[i].title = res.data[i].trackName;
-          temp[i].date = res.data[i].releaseDate.substring(0,10);
-          temp[i].genre = res.data[i].primaryGenreName;
-          temp[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
-          temp[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
+          var temp = Array(res.data.length);
 
-          // morph url related
-          temp[i].artistViewUrl = res.data[i].artistViewUrl;
-          temp[i].trackViewUrl = res.data[i].trackViewUrl;
-          temp[i].image = res.data[i].artworkUrl100;
-        }
+          for(var i=0; i<temp.length; i++) {
+            temp[i] = {};
 
-        setInfoData(temp);
-        setStep(3);
-      })
-      .catch((e) => console.log(e));
+            // morph general info
+            temp[i].artist = res.data[i].artistName;
+            temp[i].album = res.data[i].collectionName;
+            temp[i].title = res.data[i].trackName;
+            temp[i].date = res.data[i].releaseDate.substring(0,10);
+            temp[i].genre = res.data[i].primaryGenreName;
+            temp[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
+            temp[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
+
+            // morph url related
+            temp[i].artistViewUrl = res.data[i].artistViewUrl;
+            temp[i].trackViewUrl = res.data[i].trackViewUrl;
+            temp[i].image = res.data[i].artworkUrl100;
+          }
+
+          setInfoData(temp);
+          setStep(3);
+        })
+        .catch((e) => console.log(e));
+      }
   };
 
   return (
