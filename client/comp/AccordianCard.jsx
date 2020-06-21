@@ -33,7 +33,7 @@ export default function AccordianCard({ info, index, submitTagSelection }) {
               <label><input type="checkbox" disabled checked/> <strong>Artist:</strong> <a target="_blank" rel="noreferrer noopener" href={info.artistViewUrl}>{info.artist}</a></label> <br/>
               <label><input type="checkbox" value="album" onChange={handleCBOnChange}/> <strong>Album:</strong> {info.album}</label> <br/>
               <label><input type="checkbox" disabled checked/> <strong>Title:</strong> <a target="_blank" rel="noreferrer noopener" href={info.trackViewUrl}>{info.title}</a></label> <br/>
-              <label><input type="checkbox" value="date" onChange={handleCBOnChange}/> <strong>Release Date:</strong> {info.date}</label> <br/>
+              <label><input type="checkbox" value="year" onChange={handleCBOnChange}/> <strong>Release Date:</strong> {info.year}</label> <br/>
               <label><input type="checkbox" value="genre" onChange={handleCBOnChange}/> <strong>Genre:</strong> {info.genre}</label> <br/>
               <label><input type="checkbox" value="trackNumber" onChange={handleCBOnChange}/> <strong>Track Number:</strong> {info.trackNumber}</label> <br/>
               <label><input type="checkbox" value="partOfSet" onChange={handleCBOnChange}/> <strong>Disc Number:</strong> {info.partOfSet}</label>

@@ -42,7 +42,7 @@ export default function EditWindow({ pageControlOnClick }) {
             temp[i].artist = res.data[i].artistName;
             temp[i].album = res.data[i].collectionName;
             temp[i].title = res.data[i].trackName;
-            temp[i].date = res.data[i].releaseDate.substring(0,10);
+            temp[i].year = res.data[i].releaseDate.substring(0,10);
             temp[i].genre = res.data[i].primaryGenreName;
             temp[i].trackNumber = res.data[i].trackNumber + '/' + res.data[i].trackCount;
             temp[i].partOfSet = res.data[i].discNumber + '/' + res.data[i].discCount;
