@@ -67,8 +67,7 @@ export default function EditWindow({ pageControlOnClick }) {
       data: selectedInfo
     })
       .then((res) => {
-        // setStep(4);
-        console.log(res.status);
+        setStep(4);
       })
       .catch((e) => console.log(e));
   }
