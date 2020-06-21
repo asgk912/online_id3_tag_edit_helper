@@ -6,16 +6,16 @@ import { Accordion, Row, Col, Card } from 'react-bootstrap';
 import { ThumbnailContainer, Thumbnail, NextStepButtonContainer, NextStepButton} from './style.jsx';
 
 export default function AccordianCard({ info, index, submitTagSelection }) {
-  let selectedInfo = {}
-  selectedInfo.artist = info.artist;
-  selectedInfo.title = info.title;
+  let selectedTags = {}
+  selectedTags.artist = info.artist;
+  selectedTags.title = info.title;
 
   let handleCBOnChange = (e) => {
     let targetValue = e.target.value
-    if(selectedInfo[targetValue] === undefined) {
-      selectedInfo[targetValue] = info[targetValue];
+    if(selectedTags[targetValue] === undefined) {
+      selectedTags[targetValue] = info[targetValue];
     } else {
-      delete selectedInfo[targetValue];
+      delete selectedTags[targetValue];
     }
   }
 
@@ -46,7 +46,7 @@ export default function AccordianCard({ info, index, submitTagSelection }) {
             </Col>
           </Row>
           <NextStepButtonContainer>
-            <NextStepButton variant="outline-info" size="sm" onClick={()=> {submitTagSelection(selectedInfo)}}>Submit Selection</NextStepButton>
+            <NextStepButton variant="outline-info" size="sm" onClick={()=> {submitTagSelection(selectedTags)}}>Submit Selection</NextStepButton>
           </NextStepButtonContainer>
         </Card.Body>
       </Accordion.Collapse>
