@@ -28,8 +28,8 @@ export const StepIcon = styled.span`
 `;
 
 export const SingleStepContainer = styled.div`
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 `;
 
 export const SingleStepTitle = styled.div`
@@ -127,6 +127,9 @@ export const StepsContainer = styled.div`
 */
 export const NavBar = styled.div`
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   width: 100%;
   height: 60px;
   padding-top: 12px;
