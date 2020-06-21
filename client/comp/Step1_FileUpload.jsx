@@ -34,9 +34,7 @@ export default function Step1_FileUpload( {step, setStep} ) {
         setStep(2);
         setButtonDisabled(true);
       })
-      .catch((e) => {
-        console.log(e);
-      }); 
+      .catch((err) => console.log(err)); 
   }
 
   // event listner to disable/enable button
