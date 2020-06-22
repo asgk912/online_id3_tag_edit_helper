@@ -117,7 +117,7 @@ export const WelcomeButton = styled.button`
   StepWindow.jsx
 */
 export const OverflowDiv = styled.div`
-  overflow-y: auto;
+  overflow: auto;
   scroll-behavior: smooth;
 `;
 
@@ -127,7 +127,7 @@ export const ScrollWidthControlDiv = styled.div`
 
 export const StepsContainer = styled.div`
   box-sizing: border-box;
-  height: ${window.innerHeight - 60}px;
+  height: ${innerHeight - 60}px;
   width: 600px;
   margin: auto;
 `;

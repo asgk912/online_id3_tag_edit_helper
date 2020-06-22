@@ -73,7 +73,7 @@ export default function StepWindow({ pageControlOnClick }) {
           cb(cbIn);
 
           // scroll to step 2
-          stepRefs[0].current.scrollTo(0, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);
+          stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);
         })
         .catch(() => { setAlertNWErr(true); });
     } else { // file exceeds the limit, show alert
@@ -125,8 +125,9 @@ export default function StepWindow({ pageControlOnClick }) {
             setStep(3); // go to step 3
             
             // scroll to step 3
-            stepRefs[0].current.scrollTo(0, stepRefs[3].current.offsetTop - stepRefs[1].current.offsetTop + 20);
+            stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[3].current.offsetTop - stepRefs[1].current.offsetTop + 20);
           } else {
+            setInfoData([]);
             setAlertSearch(true);
           }
         })
@@ -157,7 +158,7 @@ export default function StepWindow({ pageControlOnClick }) {
         setStep(4); // got to next step
 
         // scroll to step 4
-        stepRefs[0].current.scrollTo(0, stepRefs[4].current.offsetTop - stepRefs[1].current.offsetTop + 20);
+        stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[4].current.offsetTop - stepRefs[1].current.offsetTop + 20);
       })
       .catch(() => { setAlertNWErr(true); });
   }
