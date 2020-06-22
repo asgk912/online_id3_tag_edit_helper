@@ -12,7 +12,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div style={{height: innerHeight, overflow: 'hidden'}}>
       {page ? <Welcome pageControlOnClick={pageControlOnClick} />
               : <StepWindow pageControlOnClick={pageControlOnClick} />}
     </div>

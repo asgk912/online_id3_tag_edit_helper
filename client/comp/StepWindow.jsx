@@ -9,13 +9,15 @@ import Step2_SearchInfo from './Step2_SearchInfo.jsx';
 import Step3_SelectTags from './Step3_SelectTags.jsx';
 import Step4_Download from './Step4_Download.jsx';
 // css style related
-import { StepsContainer } from './style.jsx';
+import { OverflowDiv, ScrollWidthControlDiv, StepsContainer } from './style.jsx';
 
 export default function StepWindow({ pageControlOnClick }) {
   // Hook
   const [step, setStep] = useState(1);
   const [infoData, setInfoData] = useState([{title: undefined}]);
   const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
+
+  const stepRefs = Array(4).fill(0).map(() => useRef(null)); // ref used to scroll
 
   /*
     Event Listners about http request
@@ -80,13 +82,13 @@ export default function StepWindow({ pageControlOnClick }) {
   };
 
   // for Step 3: send selected tag data to edit the id3 tag of uploade file
-  let submitTagSelection = (selectedInfo) => {
-    axios({
+  let submitTagSelection = (selectedTags) => {
+    axios({ // send selected tags to server
       url: '/api/v1/selection',
       method: 'post',
-      data: selectedInfo
+      data: selectedTags
     })
-      .then(({ data }) => {
+      .then(({ data }) => { // update filename donwload option
         let extension = data.original.substring(data.original.length - 4)
         let option = {
           original: data.original,
@@ -117,12 +119,17 @@ export default function StepWindow({ pageControlOnClick }) {
   return (
     <div>
       <NavigationBar step={step} pageControlOnClick={pageControlOnClick} />
-      <StepsContainer>
-        <Step1_FileUpload step={step} uploadFileOnClick={uploadFileOnClick} />
-        {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
-        {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
-        {(step > 3) ? <Step4_Download step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
-      </StepsContainer>
+
+      <OverflowDiv>
+        <ScrollWidthControlDiv>
+          <StepsContainer>
+            <Step1_FileUpload step={step} uploadFileOnClick={uploadFileOnClick} />
+            {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
+            {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
+            {(step > 3) ? <Step4_Download step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
+          </StepsContainer>
+        </ScrollWidthControlDiv>
+      </OverflowDiv>
     </div>
   );
 }

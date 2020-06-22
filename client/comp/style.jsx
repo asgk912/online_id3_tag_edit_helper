@@ -116,8 +116,17 @@ export const WelcomeButton = styled.button`
 /*
   StepWindow.jsx
 */
+export const OverflowDiv = styled.div`
+  overflow-y: auto;
+`;
+
+export const ScrollWidthControlDiv = styled.div`
+  width: ${innerWidth - 18}px;
+`;
+
 export const StepsContainer = styled.div`
   box-sizing: border-box;
+  height: ${window.innerHeight - 60}px;
   width: 600px;
   margin: auto;
 `;
@@ -127,9 +136,6 @@ export const StepsContainer = styled.div`
 */
 export const NavBar = styled.div`
   box-sizing: border-box;
-  position: sticky;
-  top: 0;
-  z-index: 10;
   width: 100%;
   height: 60px;
   padding-top: 12px;
