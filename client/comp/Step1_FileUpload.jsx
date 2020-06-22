@@ -6,6 +6,7 @@ import { StepIcon,
         SingleStepContainer,
         SingleStepTitle,
         SingleStepContents, 
+        SingleStepSubTitle, 
         InputFileContainer,
         NextStepButtonContainer,
         NextStepButton } from './style.jsx';
@@ -34,8 +35,8 @@ export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick}
   return (
     <SingleStepContainer ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</SingleStepTitle>
-      
       <SingleStepContents>
+        <SingleStepSubTitle>The size of the file has to be less than 12 MB</SingleStepSubTitle>
         <InputFileContainer>
           <input ref={fileInputRef} type="file" accept="audio/*" onChange={enableButtonOnChange}/>
         </InputFileContainer>

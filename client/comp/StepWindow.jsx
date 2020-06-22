@@ -9,11 +9,13 @@ import Step2_SearchInfo from './Step2_SearchInfo.jsx';
 import Step3_SelectTags from './Step3_SelectTags.jsx';
 import Step4_Download from './Step4_Download.jsx';
 // css style related
+import { Alert } from 'react-bootstrap';
 import { OverflowDiv, ScrollWidthControlDiv, StepsContainer } from './style.jsx';
 
 export default function StepWindow({ pageControlOnClick }) {
   // Hook
   const [step, setStep] = useState(1);
+  const [uploadable, setUploadable] = useState(true);
   const [infoData, setInfoData] = useState([{title: undefined}]);
   const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
 
@@ -26,24 +28,38 @@ export default function StepWindow({ pageControlOnClick }) {
   let uploadFileOnClick = (e, fileInputRef, cb, cbIn) => {
     e.preventDefault();
 
-    // set form data
-    let data = new FormData();
-    data.append('audio', fileInputRef.current.files[0]);
+    let audioFile = fileInputRef.current.files[0];
+    
+    if(audioFile.size < 12000000) { // check the size of file
+      setUploadable(true); // hide alert if it is shown
 
-    // post request with axios
-    axios.post('/api/v1/file', data, {
-      header: {
-        'Content-Type': 'multipart/form-data',
-      }
-    })
-      .then(() => {
-        setStep(2); // go to next step
-        cb(cbIn);   // callback function will disable the submit button
+      // set form data for post
+      let data = new FormData();
+      data.append('audio', audioFile);
 
-        // scroll to step 2
-        stepRefs[0].current.scrollTo(0, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);
+      // post request with axios
+      axios.post('/api/v1/file', data, {
+        header: {
+          'Content-Type': 'multipart/form-data',
+        }
       })
-      .catch((err) => console.log(err)); 
+        .then(() => {
+          if(step === 1) {
+            setStep(2); // load step 2 on browser
+          } else if (step === 4) {
+            setStep(3); // hide donwload step when 
+          }
+          
+          cb(cbIn); // callback function will disable the submit button
+
+          // scroll to step 2
+          stepRefs[0].current.scrollTo(0, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setUploadable(false);
+      // setStep(1.5);
+    }
   }
  
   // for Step 2: send http request about search and sets infoData which will be passed down to step 3 
@@ -111,7 +127,7 @@ export default function StepWindow({ pageControlOnClick }) {
       .catch((err) => console.log(err));
   }
 
-  // for step 4: modify filename and download file
+  // for Step 4: modify filename and download file
   let downloadOnClick = (e, fileName) => {
     if(fileName){
       e.preventDefault();
@@ -134,11 +150,12 @@ export default function StepWindow({ pageControlOnClick }) {
         <ScrollWidthControlDiv>
           <StepsContainer>
             <Step1_FileUpload forwardRef={stepRefs[1]} step={step} uploadFileOnClick={uploadFileOnClick} />
+            {!uploadable ? <Alert variant="danger">The size of the file exceeds 12 MB</Alert> : ''}
             {(step > 1) ? <Step2_SearchInfo forwardRef={stepRefs[2]} step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
             {(step > 2) ? <Step3_SelectTags forwardRef={stepRefs[3]} step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
             {(step > 3) ? <Step4_Download forwardRef={stepRefs[4]} step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
             
-            {/* white space */}
+            {/* extra white space to make step 3 and 4 in view*/}
             {(step > 2) ? <span><br/><br/><br/><br/></span> : ''}
           </StepsContainer>
         </ScrollWidthControlDiv>
