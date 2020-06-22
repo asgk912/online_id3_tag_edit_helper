@@ -137,6 +137,9 @@ export default function StepWindow({ pageControlOnClick }) {
             {(step > 1) ? <Step2_SearchInfo forwardRef={stepRefs[2]} step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
             {(step > 2) ? <Step3_SelectTags forwardRef={stepRefs[3]} step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
             {(step > 3) ? <Step4_Download forwardRef={stepRefs[4]} step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
+            
+            {/* white space */}
+            {(step > 2) ? <span><br/><br/><br/><br/></span> : ''}
           </StepsContainer>
         </ScrollWidthControlDiv>
       </OverflowDiv>

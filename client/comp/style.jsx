@@ -156,8 +156,8 @@ export const InputFileContainer = styled.div`
   AccordianCard.jsx
 */
 export const ThumbnailContainer = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   padding: 5px;
   border-radius: 3px;
   border: 2px solid #dedede;
@@ -170,23 +170,30 @@ export const Thumbnail = styled.img`
 `;
 
 /*
+  Step3_SelectTags.jsx
+*/
+export const AccHeightControl = styled.div`
+  height: 350px;
+  overflow-y: auto;
+`;
+
+/*
   Step4_DownloadFile.jsx
 */
 export const RadioTip = styled.div`
-  position: relative;
-  left: 22px;
+  margin-left: 22px;
   font-weight: 520;
 `;
 
 export const LastStepButton = styled.button`
-  width: 180px;
-  height: 50px;
+  width: 160px;
+  height: 40px;
   border-width: 2px;
   border-radius: 3px;
   border-color: ${themeColor};
   color: ${themeColor};
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 520;
 
   &:hover:enabled {

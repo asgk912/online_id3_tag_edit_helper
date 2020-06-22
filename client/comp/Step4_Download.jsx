@@ -82,8 +82,6 @@ export default function Step4_Download({ forwardRef, step, dlOption, downloadOnC
                   <InputGroup.Text>{dlOption.extension}</InputGroup.Text>
                 </InputGroup.Append>
               </InputGroup>
-              {/* <input className="radio-customName" type="text" required={radioStatus[2]} maxLength="40" size="40" value={customName} onChange={handleTextInputOnChange}/>
-              <span className="radio-customName">{dlOption.extension}</span> */}
             </RadioTip>
           </div>
         </form>
@@ -91,8 +89,6 @@ export default function Step4_Download({ forwardRef, step, dlOption, downloadOnC
       <div style={{textAlign: "center", marginTop: "30px"}}>
         <LastStepButton form="radio-fileName" onClick={(e) => downloadOnClick(e, fileName)}>Download File</LastStepButton>
       </div>
-      {/* white space */}
-      <br/><br/><br/>
     </SingleStepContainer>
   );
 }

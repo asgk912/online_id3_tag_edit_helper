@@ -15,8 +15,8 @@ export default function Step3_SelectTags({ forwardRef, step, submitTagSelection,
   return (
     <SingleStepContainer ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_3</StepIcon>Select Tags</SingleStepTitle>
-      <div style={{height: '500px', overflowY: 'auto'}}>
-        <Accordion>
+      <div style={{height: '420px', overflowY: 'auto'}}>
+        <Accordion defaultActiveKey={0}>
           {infoData.map((info, index) => <AccordianCard key={index} info={info} index={index} submitTagSelection={submitTagSelection}/>)}
         </Accordion>
       </div>
