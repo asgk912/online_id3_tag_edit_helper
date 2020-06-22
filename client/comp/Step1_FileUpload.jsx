@@ -10,7 +10,7 @@ import { StepIcon,
         NextStepButtonContainer,
         NextStepButton } from './style.jsx';
 
-export default function Step1_FileUpload( {step, uploadFileOnClick} ) {
+export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick} ) {
   // Hook
   let [buttonDisabled, setButtonDisabled] = useState(true); // handles disabled attribute of button
   let fileInputRef = useRef(); // to reference file input type
@@ -32,7 +32,7 @@ export default function Step1_FileUpload( {step, uploadFileOnClick} ) {
   }
  
   return (
-    <SingleStepContainer>
+    <SingleStepContainer ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</SingleStepTitle>
       
       <SingleStepContents>
@@ -49,6 +49,7 @@ export default function Step1_FileUpload( {step, uploadFileOnClick} ) {
 }
 
 Step1_FileUpload.propTypes = {
+  forwardRef: PropTypes.object,
   step: PropTypes.number,
   uploadFileOnClick: PropTypes.func
 }

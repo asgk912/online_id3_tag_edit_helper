@@ -118,6 +118,7 @@ export const WelcomeButton = styled.button`
 */
 export const OverflowDiv = styled.div`
   overflow-y: auto;
+  scroll-behavior: smooth;
 `;
 
 export const ScrollWidthControlDiv = styled.div`

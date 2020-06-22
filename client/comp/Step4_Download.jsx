@@ -11,7 +11,7 @@ import { SingleStepContainer,
         RadioTip,
         LastStepButton } from './style.jsx';
 
-export default function Step4_Download({ step, dlOption, downloadOnClick }) {
+export default function Step4_Download({ forwardRef, step, dlOption, downloadOnClick }) {
   // hook
   const [customName, setCustomName] = useState('');
   const [radioStatus, setRadioStatus] = useState([false, true, false]);
@@ -54,7 +54,7 @@ export default function Step4_Download({ step, dlOption, downloadOnClick }) {
   };
 
   return (
-    <SingleStepContainer>
+    <SingleStepContainer ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_4</StepIcon>Download File</SingleStepTitle>
       <SingleStepContents>
         <SingleStepSubTitle>Choose file name you want download with:</SingleStepSubTitle>
@@ -91,11 +91,14 @@ export default function Step4_Download({ step, dlOption, downloadOnClick }) {
       <div style={{textAlign: "center", marginTop: "30px"}}>
         <LastStepButton form="radio-fileName" onClick={(e) => downloadOnClick(e, fileName)}>Download File</LastStepButton>
       </div>
+      {/* white space */}
+      <br/><br/><br/>
     </SingleStepContainer>
   );
 }
 
 Step4_Download.propTypes = {
+  forwardRef: PropTypes.object,
   step: PropTypes.number,
   dlOption: PropTypes.object,
   downloadOnClick: PropTypes.func

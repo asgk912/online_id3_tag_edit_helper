@@ -17,7 +17,7 @@ export default function StepWindow({ pageControlOnClick }) {
   const [infoData, setInfoData] = useState([{title: undefined}]);
   const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
 
-  const stepRefs = Array(4).fill(0).map(() => useRef(null)); // ref used to scroll
+  const stepRefs = Array(5).fill(0).map(() => useRef(null)); // ref used to scroll window
 
   /*
     Event Listners about http request
@@ -38,7 +38,10 @@ export default function StepWindow({ pageControlOnClick }) {
     })
       .then(() => {
         setStep(2); // go to next step
-        cb(cbIn);   // callback function will disable the button
+        cb(cbIn);   // callback function will disable the submit button
+
+        // scroll to step 2
+        stepRefs[0].current.scrollTo(0, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);
       })
       .catch((err) => console.log(err)); 
   }
@@ -76,6 +79,9 @@ export default function StepWindow({ pageControlOnClick }) {
 
           setInfoData(morphed); // set infoData
           setStep(3); // go to step 3
+
+          // scroll to step 3
+          stepRefs[0].current.scrollTo(0, stepRefs[3].current.offsetTop - stepRefs[1].current.offsetTop + 20);
         })
         .catch((err) => console.log(err));
       }
@@ -95,8 +101,12 @@ export default function StepWindow({ pageControlOnClick }) {
           artistTitle: data.artist + ' - ' + data.title + extension,
           extension: extension
         }
-        setDLOption(option)
-        setStep(4);
+
+        setDLOption(option) // set state values that are passed down to step 4
+        setStep(4); // got to next step
+
+        // scroll to step 4
+        stepRefs[0].current.scrollTo(0, stepRefs[4].current.offsetTop - stepRefs[1].current.offsetTop + 20);
       })
       .catch((err) => console.log(err));
   }
@@ -120,13 +130,13 @@ export default function StepWindow({ pageControlOnClick }) {
     <div>
       <NavigationBar step={step} pageControlOnClick={pageControlOnClick} />
 
-      <OverflowDiv>
+      <OverflowDiv ref={stepRefs[0]}>
         <ScrollWidthControlDiv>
           <StepsContainer>
-            <Step1_FileUpload step={step} uploadFileOnClick={uploadFileOnClick} />
-            {(step > 1) ? <Step2_SearchInfo step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
-            {(step > 2) ? <Step3_SelectTags step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
-            {(step > 3) ? <Step4_Download step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
+            <Step1_FileUpload forwardRef={stepRefs[1]} step={step} uploadFileOnClick={uploadFileOnClick} />
+            {(step > 1) ? <Step2_SearchInfo forwardRef={stepRefs[2]} step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
+            {(step > 2) ? <Step3_SelectTags forwardRef={stepRefs[3]} step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
+            {(step > 3) ? <Step4_Download forwardRef={stepRefs[4]} step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
           </StepsContainer>
         </ScrollWidthControlDiv>
       </OverflowDiv>

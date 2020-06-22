@@ -9,11 +9,11 @@ import { StepIcon,
         SingleStepContainer,
         SingleStepTitle } from './style.jsx';
 
-export default function Step3_SelectTags({ step, submitTagSelection, infoData }) {
+export default function Step3_SelectTags({ forwardRef, step, submitTagSelection, infoData }) {
   let iconTheme = (step === 3) ? "material-icons" : "material-icons-outlined";
 
   return (
-    <SingleStepContainer>
+    <SingleStepContainer ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_3</StepIcon>Select Tags</SingleStepTitle>
       <div style={{height: '500px', overflowY: 'auto'}}>
         <Accordion>
@@ -25,6 +25,7 @@ export default function Step3_SelectTags({ step, submitTagSelection, infoData })
 }
 
 Step3_SelectTags.propTypes = {
+  forwardRef: PropTypes.object,
   step: PropTypes.number,
   submitTagSelection: PropTypes.func,
   infoData: PropTypes.array
