@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbName = 'id3TagEdittor'       // database name
+const dbName = 'id3TagEdittor'       // queryResultbase name
 const collectionName = 'uploadedFile' // table(collection) name
 
 // connect to mongoDB
@@ -30,21 +30,21 @@ let createDoc = (fileBuffer, fileName, mimeType, callback) => {
   let newUF = new modelUF({ fileBuffer, fileName, mimeType });
 
   newUF.save()
-    .then((logs) => callback(null, logs))
+    .then((qRes) => callback(null, qRes))
     .catch((err) => callback(err, null));
 };
 
 // read
 let readDoc = (id, callback) => {
   modelUF.findById(id, {__v: 0})
-    .then((data) => callback(null, data))
+    .then((qRes) => callback(null, qRes))
     .catch((err) => callback(err, null));
 };
 
 // update
 let updateDoc = (id, newData, callback) => {
   modelUF.findByIdAndUpdate(id, newData, {returnOriginal: false, useFindAndModify: false})
-    .then((data) => callback(null, data))
+    .then((qRes) => callback(null, qRes))
     .catch((err) => callback(err, null));
 };
 

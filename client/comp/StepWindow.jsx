@@ -13,9 +13,12 @@ import { Alert } from 'react-bootstrap';
 import { OverflowDiv, ScrollWidthControlDiv, StepsContainer } from './style.jsx';
 
 export default function StepWindow({ pageControlOnClick }) {
+  
   /* 
     Hooks
   */
+  // id of uploaded file in database
+  const [id, setID] = useState(""); 
   // state to control which steps are shown
   const [step, setStep] = useState(1);
 
@@ -61,7 +64,9 @@ export default function StepWindow({ pageControlOnClick }) {
           'Content-Type': 'multipart/form-data',
         }
       })
-        .then(() => {
+        .then((res) => {
+          setID(res.data.id); // set id;
+
           // control which step to be shown based
           if(step === 1) {            // file is uploaded for the first time
             setStep(2);               // show step 2 only
@@ -136,15 +141,17 @@ export default function StepWindow({ pageControlOnClick }) {
   };
 
   // for Step 3: send selected tag data to edit the id3 tag of uploade file
-  let submitTagSelection = (selectedTags) => {
+  let submitTagSelection = (newTags) => {
     if(alertNWErr){ // hide network alert if shown
       setAlertNWErr(false); 
     }
 
+    console.log(id);
+
     axios({ // send selected tags to server
       url: '/api/v1/selection',
       method: 'post',
-      data: selectedTags
+      data: { id, newTags }
     })
       .then(({ data }) => { // update filename donwload option
         let extension = data.original.substring(data.original.length - 4)
@@ -175,9 +182,9 @@ export default function StepWindow({ pageControlOnClick }) {
       axios({ // first send updated filename
         url: '/api/v1/fileName',
         method: 'post',
-        data: { fileName }
+        data: { id, fileName }
       })
-        .then(()=> window.open('/api/v1/file')) // download file
+        .then(()=> window.open(`/api/v1/file/?id=${id}`)) // download file
         .catch(() => { setAlertNWErr(true); });
     }
   }

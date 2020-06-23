@@ -1,9 +1,10 @@
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
+const multer = require('multer');
 const morgan = require('morgan');
 const axios = require('axios');
 const NodeID3 = require('node-id3');
+const db = require('../db/index.js');
 
 // set up server
 var app = express();
@@ -14,56 +15,60 @@ app.set('port', port);
 app.use(express.json());
 app.use(morgan('dev'));
 
-// specify the directory of static files
-app.use('/', express.static(path.join(__dirname, '../client/dist')));
-
-// handle requests
-// to handle audio file post
+// middleware to handle audio file post
 const upload = multer();
 
-var audioBuffer, audioFileName, audioMimeType;
+// directory of static files
+app.use('/', express.static(path.join(__dirname, '../client/dist')));
 
+/* 
+  Request Reponses
+*/
+
+// response to file post from step 1
 app.post('/api/v1/file', upload.single('audio'), (req, res) => {
-  audioBuffer = req.file.buffer;
-  audioFileName = req.file.originalname;
-  audioMimeType = req.file.mimetype;
-  
-  res.sendStatus(201);
+  db.createDoc(req.file.buffer, req.file.originalname, req.file.mimtype, (err, dbQRes) => {
+    if(err) res.sendStatus(500)
+    else res.status(201).send({id: dbQRes._id});
+  });
 });
 
+// response to query through iTunes API from step 2
 app.get('/api/v1/search', (req, res) => {
-  let config = {};
-  config.params = {
+  let config = { params: {
     media: 'music',
     // entity: 'attribute=artistTerm,songTerm',
-  };
+  }};
   config.params = Object.assign(config.params, req.query);
 
   axios.get('https://itunes.apple.com/search', config)
     .then((iTunesRes) => {
       res.json(iTunesRes.data.results);
     })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
+    .catch(() => res.sendStatus(500));
 });
 
+// response to tag update from step 3
 app.post('/api/v1/selection', (req, res) => {
-  let newTags = Object.assign({}, req.body);
-  
-  let editAndRespond = (tag, buffer) => {
-    NodeID3.write(tag, buffer, (err, newAudioBuffer) => {
-      if(err) {
-        console.log(err);
-        res.sendStatus(500);
-      } else {
-        audioBuffer = newAudioBuffer;
-        res.json({original: audioFileName, artist: newTags.artist, title: newTags.title});
+  let { id, newTags } = req.body;
+
+  let editAndRespond = (id, newTags) => { // function to read doc and update
+    db.readDoc(id, (err, dbQRes1) => {
+      if(err) res.sendStatus(500);
+      else {
+        NodeID3.write(newTags, dbQRes1.fileBuffer, (err, newFileBuffer) => {
+          if(err) res.sendStatus(500);
+          else {
+            db.updateDoc(id, { fileBuffer: newFileBuffer}, (err, dbQRes2) => {
+              if(err) res.sendStatus(500);
+              else res.json({original: dbQRes2.fileName, artist: newTags.artist, title: newTags.title});
+            })
+          }
+        });
       }
-    });
+    })
   }
-  
+
   if(newTags.image) { //if image url is selected, then change to buffer
     axios({
       url: newTags.image,
@@ -72,27 +77,34 @@ app.post('/api/v1/selection', (req, res) => {
     })
       .then((imgRes) => {
         newTags.image = imgRes.data;
-        console.log(newTags);
-        editAndRespond(newTags, audioBuffer);
+        editAndRespond(id, newTags);
       })
-      .catch((err) => console.log(err));
+      .catch(() => res.sendStatus(500));
   } else {
-    console.log(newTags);
-    editAndRespond(newTags, audioBuffer);
+    editAndRespond(id, newTags);
   }
+  
 })
 
 app.post('/api/v1/fileName', (req, res) => {
-  audioFileName = req.body.fileName;
-  res.sendStatus(200);
+  db.updateDoc(req.body.id, {fileName: req.body.fileName}, (err) => {
+    if(err) res.sendStatus(500);
+    else res.sendStatus(200);
+  })
 });
 
 app.get('/api/v1/file', (req, res) => {
-  res.set({
-    'Content-Type': audioMimeType,
-    'Content-Disposition': `attachment; filename=${audioFileName}`
-  });
-  res.end(audioBuffer);
+  db.readDoc(req.query.id, (err, dbQRes) => {
+    if (err) res.sendStatus(500);
+    else {
+      res.set({
+        'Content-Type': dbQRes.mimtype,
+        'Content-Disposition': `attachment; filename=${dbQRes.fileName}`
+      });
+      res.end(dbQRes.fileBuffer);
+    }
+  })
+  
 });
 
 // start server
