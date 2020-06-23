@@ -39,6 +39,18 @@ export default function StepWindow({ pageControlOnClick }) {
       other event listners are declared within each step submodule
   */
 
+  window.addEventListener("unload", () => {
+    if(id.length > 0) {
+      axios({ // send selected tags to server
+        url: '/api/v1/file',
+        method: 'delete',
+        data: { id }
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+  })
+
   // for Step 1: upload file to server
   let uploadFileOnClick = (e, fileInputRef, cb, cbIn) => {
     e.preventDefault();

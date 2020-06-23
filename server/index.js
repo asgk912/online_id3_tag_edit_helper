@@ -25,7 +25,7 @@ app.use('/', express.static(path.join(__dirname, '../client/dist')));
   Request Reponses
 */
 
-// response to file post from step 1
+// response to file post in step 1
 app.post('/api/v1/file', upload.single('audio'), (req, res) => {
   db.createDoc(req.file.buffer, req.file.originalname, req.file.mimtype, (err, dbQRes) => {
     if(err) res.sendStatus(500)
@@ -33,7 +33,29 @@ app.post('/api/v1/file', upload.single('audio'), (req, res) => {
   });
 });
 
-// response to query through iTunes API from step 2
+// response to file download in step 4
+app.get('/api/v1/file', (req, res) => {
+  db.readDoc(req.query.id, (err, dbQRes) => {
+    if (err) res.sendStatus(500);
+    else {
+      res.set({
+        'Content-Type': dbQRes.mimtype,
+        'Content-Disposition': `attachment; filename=${dbQRes.fileName}`
+      });
+      res.end(dbQRes.fileBuffer);
+    }
+  })
+});
+
+// response when window close
+app.delete('/api/v1/file', (req, res) => {
+  db.deleteDoc(req.body.id, (err) => {
+    if (err) res.sendStatus(500);
+    else res.sendStatus(200);
+  })
+});
+
+// response to query through iTunes API in step 2
 app.get('/api/v1/search', (req, res) => {
   let config = { params: {
     media: 'music',
@@ -48,7 +70,7 @@ app.get('/api/v1/search', (req, res) => {
     .catch(() => res.sendStatus(500));
 });
 
-// response to tag update from step 3
+// response to tag update in step 3
 app.post('/api/v1/selection', (req, res) => {
   let { id, newTags } = req.body;
 
@@ -86,25 +108,12 @@ app.post('/api/v1/selection', (req, res) => {
   
 })
 
+// partial response to file name update in step 4
 app.post('/api/v1/fileName', (req, res) => {
   db.updateDoc(req.body.id, {fileName: req.body.fileName}, (err) => {
     if(err) res.sendStatus(500);
     else res.sendStatus(200);
   })
-});
-
-app.get('/api/v1/file', (req, res) => {
-  db.readDoc(req.query.id, (err, dbQRes) => {
-    if (err) res.sendStatus(500);
-    else {
-      res.set({
-        'Content-Type': dbQRes.mimtype,
-        'Content-Disposition': `attachment; filename=${dbQRes.fileName}`
-      });
-      res.end(dbQRes.fileBuffer);
-    }
-  })
-  
 });
 
 // start server
