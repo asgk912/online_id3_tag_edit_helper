@@ -5,7 +5,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 // styled components
 import { NavBar, MusicIcon, StepIcon } from './style.jsx';
 
-export default function NavigationBar({ step, pageControlOnClick }) {
+export default function NavigationBar({ step, pageControlOnClick, scrollOnClickNavBar }) {
   const [musicIcon, setMusicIcon] = useState(true);
 
   let changeMusicIconOnMouse = () => {
@@ -18,22 +18,19 @@ export default function NavigationBar({ step, pageControlOnClick }) {
                   <OverlayTrigger placement="right" overlay={<Tooltip>Back to the welcome page.</Tooltip>} >
                     <MusicIcon className="material-icons" fs="36px" onClick={pageControlOnClick} onMouseLeave={changeMusicIconOnMouse}>library_music</MusicIcon>
                   </OverlayTrigger>}
-      {step === 1 ? <StepIcon className="material-icons">looks_one</StepIcon> :
-                    <StepIcon className="material-icons-outlined">looks_one</StepIcon>}
+      <StepIcon className={"material-icons" + (step === 1 ? "" : "-outlined") + " step1"} onClick={scrollOnClickNavBar}>looks_one</StepIcon>
       <StepIcon className="material-icons">more_horiz</StepIcon>
-      {step === 2 ? <StepIcon className="material-icons">looks_two</StepIcon> :
-                    <StepIcon className="material-icons-outlined">looks_two</StepIcon>}
+      <StepIcon className={"material-icons" + (step === 2 ? "" : "-outlined") + " step2"} onClick={scrollOnClickNavBar}>looks_two</StepIcon>
       <StepIcon className="material-icons">more_horiz</StepIcon>
-      {step === 3 ? <StepIcon className="material-icons">looks_3</StepIcon> :
-                    <StepIcon className="material-icons-outlined">looks_3</StepIcon>}
+      <StepIcon className={"material-icons" + (step === 3 ? "" : "-outlined") + " step3"} onClick={scrollOnClickNavBar}>looks_3</StepIcon>
       <StepIcon className="material-icons">more_horiz</StepIcon>
-      {step === 4 ? <StepIcon className="material-icons">looks_4</StepIcon> :
-                    <StepIcon className="material-icons-outlined">looks_4</StepIcon>}
+      <StepIcon className={"material-icons" + (step === 4 ? "" : "-outlined") + " step4"} onClick={scrollOnClickNavBar}>looks_4</StepIcon>
     </NavBar>
   );
 }
 
 NavigationBar.propTypes = {
   step: PropTypes.number,
-  pageControlOnClick: PropTypes.func
+  pageControlOnClick: PropTypes.func,
+  scrollOnClickNavBar: PropTypes.func
 };

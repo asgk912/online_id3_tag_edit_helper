@@ -47,11 +47,19 @@ export default function StepWindow({ pageControlOnClick }) {
     if(alertNWErr) { // turn off search alert in 3s
       setTimeout(() => setAlertNWErr(false), 3000);
     }
-  }, [alertUL, alertSearch, alertNWErr])
+  }, [alertUL, alertSearch, alertNWErr]);
+
+  // event listner for scroll
+  let scrollOnClickNavBar = (e) => {
+    let index = parseInt(e.target.classList[3][4]);
+    
+    if(index <= step) {
+      stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[index].current.offsetTop - stepRefs[1].current.offsetTop + 20);
+    }
+  };
 
   /*
     Event Listners with http request
-      other event listners are declared within each step submodule
   */
 
   window.addEventListener("beforeunload", () => {
@@ -216,7 +224,7 @@ export default function StepWindow({ pageControlOnClick }) {
 
   return (
     <div>
-      <NavigationBar step={step} pageControlOnClick={pageControlOnClick} />
+      <NavigationBar step={step} pageControlOnClick={pageControlOnClick} scrollOnClickNavBar={scrollOnClickNavBar}/>
 
       <OverflowDiv ref={stepRefs[0]}>
         <ScrollWidthControlDiv>
