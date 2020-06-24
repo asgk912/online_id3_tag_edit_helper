@@ -1,5 +1,5 @@
 // node packages
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 // submodules
@@ -31,8 +31,23 @@ export default function StepWindow({ pageControlOnClick }) {
   const [infoData, setInfoData] = useState([]);
   const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
 
-   // Refs to scroll window
+  // Refs to scroll window
   const stepRefs = Array(5).fill(0).map(() => useRef(null));
+
+  // React useeffect
+  useEffect(()=> { 
+    if(alertUL) { // turn off upload alert in 3s
+      setTimeout(() => setAlertUL(false), 3000);
+    }
+
+    if(alertSearch) { // turn off search alert in 3s
+      setTimeout(() => setAlertSearch(false), 3000);
+    }
+
+    if(alertNWErr) { // turn off search alert in 3s
+      setTimeout(() => setAlertNWErr(false), 3000);
+    }
+  }, [alertUL, alertSearch, alertNWErr])
 
   /*
     Event Listners with http request
@@ -92,7 +107,7 @@ export default function StepWindow({ pageControlOnClick }) {
           // scroll to step 2
           stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);
         })
-        .catch(() => { setAlertNWErr(true); });
+        .catch(() => setAlertNWErr(true));
     } else { // file exceeds the limit, show alert
       setAlertUL(true);
     }
@@ -148,7 +163,7 @@ export default function StepWindow({ pageControlOnClick }) {
             setAlertSearch(true);
           }
         })
-        .catch(() => { setAlertNWErr(true); });
+        .catch(() => setAlertNWErr(true));
       }
   };
 
@@ -179,7 +194,7 @@ export default function StepWindow({ pageControlOnClick }) {
         // scroll to step 4
         stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[4].current.offsetTop - stepRefs[1].current.offsetTop + 20);
       })
-      .catch(() => { setAlertNWErr(true); });
+      .catch(() => setAlertNWErr(true));
   }
 
   // for Step 4: modify filename and download file
@@ -197,7 +212,7 @@ export default function StepWindow({ pageControlOnClick }) {
         data: { id, fileName }
       })
         .then(()=> window.open(`/api/v1/file/?id=${id}`)) // download file
-        .catch(() => { setAlertNWErr(true); });
+        .catch(() => setAlertNWErr(true));
     }
   }
 
@@ -208,11 +223,10 @@ export default function StepWindow({ pageControlOnClick }) {
       <OverflowDiv ref={stepRefs[0]}>
         <ScrollWidthControlDiv>
           <StepsContainer>
+            {/* Steps */}
             <Step1_FileUpload forwardRef={stepRefs[1]} step={step} uploadFileOnClick={uploadFileOnClick} />
-            {alertUL ? <Alert variant="danger">The size of the file exceeds 12 MB</Alert> : ''}
 
             {(step > 1) ? <Step2_SearchInfo forwardRef={stepRefs[2]} step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
-            {(step > 1 && alertSearch) ? <Alert variant="danger">No search restult.</Alert> : ''}
 
             {(step > 2) ? <Step3_SelectTags forwardRef={stepRefs[3]} step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
 
@@ -221,15 +235,24 @@ export default function StepWindow({ pageControlOnClick }) {
             {/* extra white space to make step 3 and 4 in view*/}
             {(step > 2) ? <span><br/><br/><br/><br/></span> : ''}
 
-            {/* alert on network error */}
-            {!alertNWErr ? '' : 
-              <Alert variant="danger" 
-                    style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}
-                    onClose={() => setAlertNWErr(false)}
-                    dismissible>
+            {/* Alerts on Errors */}
+            {alertUL ?
+              <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
+                <Alert.Heading>File Size Too Large</Alert.Heading>
+                <div>Please chose file with size &lt; 12 MB</div>
+              </Alert> : ''}
+
+            {(step > 1 && alertSearch) ?
+              <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
+                <Alert.Heading>No Search Result</Alert.Heading>
+                <div>Please modify your search words</div>
+              </Alert> : ''}
+
+            {alertNWErr ? 
+              <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
                 <Alert.Heading>Network Error</Alert.Heading>
-                <div>Please try again in a few moments</div>
-              </Alert>
+                <div>Please try again in a moment</div>
+              </Alert> : ""
             }
 
           </StepsContainer>
