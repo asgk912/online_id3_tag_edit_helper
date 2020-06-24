@@ -16,10 +16,10 @@ export default function Welcome({ pageControlOnClick }) {
           <li>Search song information</li>
             <ul>
               <li>by iTunes search API, or</li>
-              <li>by audio recognition API (there is a limit on the number of use)</li>
+              <li><strike>by audio recognition API</strike> (currently not supported)</li>
             </ul>
-          <li>Select information you want to copy to the uploaded file</li>
-          <li>Download update version of audio file</li>
+          <li>Select tags you want to copy to the uploaded file</li>
+          <li>Download updated version of audio file with your choice of filename</li>
         </ol>
         <WelcomeButtonContainer>
           <WelcomeButton id='welcome' onClick={pageControlOnClick}>Start</WelcomeButton>
