@@ -54,7 +54,7 @@ export default function StepWindow({ pageControlOnClick }) {
       other event listners are declared within each step submodule
   */
 
-  window.addEventListener("unload", () => {
+  window.addEventListener("beforeunload", () => {
     if(id.length > 0) {
       axios({ // send selected tags to server
         url: '/api/v1/file',
@@ -172,8 +172,6 @@ export default function StepWindow({ pageControlOnClick }) {
     if(alertNWErr){ // hide network alert if shown
       setAlertNWErr(false); 
     }
-
-    console.log(id);
 
     axios({ // send selected tags to server
       url: '/api/v1/selection',
