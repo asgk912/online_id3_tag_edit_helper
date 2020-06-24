@@ -61,10 +61,9 @@ export default function StepWindow({ pageControlOnClick }) {
   /*
     Event Listners with http request
   */
-
-  window.addEventListener("beforeunload", () => {
+  let deleteFileaOnUnload = () => {
     if(id.length > 0) {
-      axios({ // send selected tags to server
+      axios({ // send request to delete previously uploaded file
         url: '/api/v1/file',
         method: 'delete',
         data: { id }
@@ -72,20 +71,22 @@ export default function StepWindow({ pageControlOnClick }) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
-  })
+  };
+
+  window.addEventListener("beforeunload", deleteFileaOnUnload)
 
   // for Step 1: upload file to server
   let uploadFileOnClick = (e, fileInputRef, cb, cbIn) => {
     e.preventDefault();
 
-    if(alertNWErr){ // hide network alert if shown
+    if(alertNWErr){ // hide network alert if still shown
       setAlertNWErr(false); 
     }
 
     let audioFile = fileInputRef.current.files[0];
     
     if(audioFile.size < 12000000) { // check the size of file
-      if(alertUL){ // hide file size alert if shown
+      if(alertUL){ // hide file size alert if still shown
         setAlertUL(false); 
       }
 
@@ -123,7 +124,7 @@ export default function StepWindow({ pageControlOnClick }) {
  
   // for Step 2: send http request about search and sets infoData which will be passed down to step 3 
   let searchOnITunesAPI = (e, artist, title) => {
-    if(alertNWErr){ // hide network alert if shown
+    if(alertNWErr){ // hide network alert if still shown
       setAlertNWErr(false); 
     }
 
@@ -137,7 +138,7 @@ export default function StepWindow({ pageControlOnClick }) {
       })
         .then((res) => {
           if(res.data.length > 1) { // if proper search results are received
-            if(alertSearch){ // hide search alert if shown
+            if(alertSearch){ // hide search alert if still shown
               setAlertSearch(false); 
             }
 
@@ -177,7 +178,7 @@ export default function StepWindow({ pageControlOnClick }) {
 
   // for Step 3: send selected tag data to edit the id3 tag of uploade file
   let submitTagSelection = (newTags) => {
-    if(alertNWErr){ // hide network alert if shown
+    if(alertNWErr){ // hide network alert if still shown
       setAlertNWErr(false); 
     }
 
@@ -205,7 +206,7 @@ export default function StepWindow({ pageControlOnClick }) {
 
   // for Step 4: modify filename and download file
   let downloadOnClick = (e, fileName) => {
-    if(alertNWErr){ // hide network alert if shown
+    if(alertNWErr){ // hide network alert if still shown
       setAlertNWErr(false);
     }
 
@@ -224,7 +225,7 @@ export default function StepWindow({ pageControlOnClick }) {
 
   return (
     <div>
-      <NavigationBar step={step} pageControlOnClick={pageControlOnClick} scrollOnClickNavBar={scrollOnClickNavBar}/>
+      <NavigationBar step={step} pageControlOnClick={pageControlOnClick} deleteFileaOnUnload={deleteFileaOnUnload} scrollOnClickNavBar={scrollOnClickNavBar}/>
 
       <OverflowDiv ref={stepRefs[0]}>
         <ScrollWidthControlDiv>
