@@ -18,10 +18,6 @@ export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick}
   
   let iconTheme = (step === 1) ? "material-icons" : "material-icons-outlined";
 
-  // if(step > 1) {
-  //   setButtonDisabled(true);
-  // }
-
   // event listner to disable/enable button
   let enableButtonOnChange = () => {
     if(fileInputRef.current.files.length === 1) {
@@ -36,7 +32,7 @@ export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick}
     <SingleStepContainer ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</SingleStepTitle>
       <SingleStepContents>
-        <SingleStepSubTitle>The size of the file has to be less than 12 MB</SingleStepSubTitle>
+        <SingleStepSubTitle>The file size has to be less than 12 MB</SingleStepSubTitle>
         <InputFileContainer>
           <input ref={fileInputRef} type="file" accept="audio/*" onChange={enableButtonOnChange}/>
         </InputFileContainer>
