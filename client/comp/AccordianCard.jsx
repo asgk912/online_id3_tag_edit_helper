@@ -20,38 +20,39 @@ export default function AccordianCard({ info, index, submitTagSelection }) {
   }
 
   return (
-    <Card>
-      <div style={{fontSize: '13px'}}>
-        <Card.Header>
-          <Accordion.Toggle as={Card.Header} variant="link" eventKey={index}>
-            <strong>Artist:</strong> {info.artist}<br/><strong>Album:</strong> {info.album}
-          </Accordion.Toggle>
-        </Card.Header>
-        <Accordion.Collapse eventKey={index}>
-          <Card.Body>
-            <Row>
-              <Col>
-                <label><input type="checkbox" disabled checked/> <strong>Artist:</strong> <a target="_blank" rel="noreferrer noopener" href={info.artistViewUrl}>{info.artist}</a></label> <br/>
-                <label><input type="checkbox" value="album" onChange={handleCBOnChange}/> <strong>Album:</strong> {info.album}</label> <br/>
-                <label><input type="checkbox" disabled checked/> <strong>Title:</strong> <a target="_blank" rel="noreferrer noopener" href={info.trackViewUrl}>{info.title}</a></label> <br/>
-                <label><input type="checkbox" value="year" onChange={handleCBOnChange}/> <strong>Release Date:</strong> {info.year}</label> <br/>
-                <label><input type="checkbox" value="genre" onChange={handleCBOnChange}/> <strong>Genre:</strong> {info.genre}</label> <br/>
-                <label><input type="checkbox" value="trackNumber" onChange={handleCBOnChange}/> <strong>Track Number:</strong> {info.trackNumber}</label> <br/>
-                <label><input type="checkbox" value="partOfSet" onChange={handleCBOnChange}/> <strong>Disc Number:</strong> {info.partOfSet}</label>
-              </Col>
-              <Col xs={5}>
-                <label><input type="checkbox" value="image" onChange={handleCBOnChange}/> <strong>Album Image:</strong></label> <br/>
-                <ThumbnailContainer>
-                  <Thumbnail src={info.image}/>
-                </ThumbnailContainer>
-              </Col>
-            </Row>
-            <NextStepButtonContainer>
-              <NextStepButton variant="outline-info" size="sm" onClick={()=> {submitTagSelection(selectedTags)}}>Submit Selection</NextStepButton>
-            </NextStepButtonContainer>
-          </Card.Body>
-        </Accordion.Collapse>
-      </div>
+    <Card style={{fontSize: '13px'}}>
+      <Card.Header>
+        <Accordion.Toggle as={Card.Header} variant="link" eventKey={index}>
+          <strong>Artist:</strong> {info.artist}<br/><strong>Album:</strong> {info.album}
+        </Accordion.Toggle>
+      </Card.Header>
+
+      <Accordion.Collapse eventKey={index}>
+        <Card.Body>
+          <Row>
+            <Col>
+              <label><input type="checkbox" disabled checked/> <strong>Artist:</strong> <a target="_blank" rel="noreferrer noopener" href={info.artistViewUrl}>{info.artist}</a></label> <br/>
+              <label><input type="checkbox" value="album" onChange={handleCBOnChange}/> <strong>Album:</strong> {info.album}</label> <br/>
+              <label><input type="checkbox" disabled checked/> <strong>Title:</strong> <a target="_blank" rel="noreferrer noopener" href={info.trackViewUrl}>{info.title}</a></label> <br/>
+              <label><input type="checkbox" value="year" onChange={handleCBOnChange}/> <strong>Release Date:</strong> {info.year}</label> <br/>
+              <label><input type="checkbox" value="genre" onChange={handleCBOnChange}/> <strong>Genre:</strong> {info.genre}</label> <br/>
+              <label><input type="checkbox" value="trackNumber" onChange={handleCBOnChange}/> <strong>Track Number:</strong> {info.trackNumber}</label> <br/>
+              <label><input type="checkbox" value="partOfSet" onChange={handleCBOnChange}/> <strong>Disc Number:</strong> {info.partOfSet}</label>
+            </Col>
+
+            <Col xs={5}>
+              <label><input type="checkbox" value="image" onChange={handleCBOnChange}/> <strong>Album Image:</strong></label> <br/>
+              <ThumbnailContainer>
+                <Thumbnail src={info.image}/>
+              </ThumbnailContainer>
+            </Col>
+          </Row>
+          
+          <NextStepButtonContainer>
+            <NextStepButton variant="outline-info" size="sm" onClick={()=> {submitTagSelection(selectedTags)}}>Submit Selection</NextStepButton>
+          </NextStepButtonContainer>
+        </Card.Body>
+      </Accordion.Collapse>
     </Card>
   );
 }
