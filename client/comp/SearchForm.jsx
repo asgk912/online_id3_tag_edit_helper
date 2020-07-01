@@ -21,15 +21,16 @@ export default function SearchForm({ searchOnITunesAPI }) {
     <div>
       <SingleStepSubTitle>Search Song by Title (required) and Artist</SingleStepSubTitle>
       <Form id="searchForm">
-          <Form.Row>
-            <Col>
-              <Form.Control required id='title' type="string" placeholder="Song Title" value={title} onChange={handleOnChange}/>
-            </Col>
-            <Col>
-              <Form.Control id='artist' type="string" placeholder="Artist Name" value={artist} onChange={handleOnChange}/>
-            </Col>
-          </Form.Row>
+        <Form.Row>
+          <Col>
+            <Form.Control required id='title' type="string" placeholder="Song Title" value={title} onChange={handleOnChange}/>
+          </Col>
+          <Col>
+            <Form.Control id='artist' type="string" placeholder="Artist Name" value={artist} onChange={handleOnChange}/>
+          </Col>
+        </Form.Row>
       </Form>
+      
       <NextStepButtonContainer>
         <NextStepButton form="searchForm" onClick={(e)=>{searchOnITunesAPI(e, artist, title)}}>Search</NextStepButton>
       </NextStepButtonContainer>
