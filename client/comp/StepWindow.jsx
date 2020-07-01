@@ -10,7 +10,7 @@ import Step3_SelectTags from './Step3_SelectTags.jsx';
 import Step4_Download from './Step4_Download.jsx';
 // css style related
 import { Alert } from 'react-bootstrap';
-import { OverflowDiv, ScrollWidthControlDiv, StepsContainer } from './style.jsx';
+import { OverflowControlDiv, StepsContainer } from './style.jsx';
 
 export default function StepWindow({ pageControlOnClick }) {
   
@@ -237,44 +237,42 @@ export default function StepWindow({ pageControlOnClick }) {
     <div>
       <NavigationBar step={step} pageControlOnClick={pageControlOnClick} deleteFileaOnUnload={deleteFileaOnUnload} scrollOnClickNavBar={scrollOnClickNavBar}/>
 
-      <OverflowDiv ref={stepRefs[0]}>
-        <ScrollWidthControlDiv>
-          <StepsContainer>
-            {/* Steps */}
-            <Step1_FileUpload forwardRef={stepRefs[1]} step={step} uploadFileOnClick={uploadFileOnClick} />
+      <OverflowControlDiv id="steps" ref={stepRefs[0]}>
+        <StepsContainer>
+          {/* Steps */}
+          <Step1_FileUpload forwardRef={stepRefs[1]} step={step} uploadFileOnClick={uploadFileOnClick} />
 
-            {(step > 1) ? <Step2_SearchInfo forwardRef={stepRefs[2]} step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
+          {(step > 1) ? <Step2_SearchInfo forwardRef={stepRefs[2]} step={step} searchOnITunesAPI={searchOnITunesAPI} /> : ''}
 
-            {(step > 2) ? <Step3_SelectTags forwardRef={stepRefs[3]} step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
+          {(step > 2) ? <Step3_SelectTags forwardRef={stepRefs[3]} step={step} infoData={infoData} submitTagSelection={submitTagSelection}/> : ''}
 
-            {(step > 3) ? <Step4_Download forwardRef={stepRefs[4]} step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
-            
-            {/* extra white space to make step 3 and 4 in view*/}
-            {(step > 2) ? <span><br/><br/><br/><br/></span> : ''}
+          {(step > 3) ? <Step4_Download forwardRef={stepRefs[4]} step={step} dlOption={dlOption} downloadOnClick={downloadOnClick} /> : ''}
+          
+          {/* extra white space to make step 3 and 4 in view*/}
+          {(step > 2) ? <span><br/><br/><br/><br/></span> : ''}
 
-            {/* Alerts on Errors */}
-            {alertUL ?
-              <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
-                <Alert.Heading>File Size Too Large</Alert.Heading>
-                <div>Please chose file with size &lt; 12 MB</div>
-              </Alert> : ''}
+          {/* Alerts on Errors */}
+          {alertUL ?
+            <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
+              <Alert.Heading>File Size Too Large</Alert.Heading>
+              <div>Please chose file with size &lt; 12 MB</div>
+            </Alert> : ''}
 
-            {(step > 1 && alertSearch) ?
-              <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
-                <Alert.Heading>No Search Result</Alert.Heading>
-                <div>Please modify your search words</div>
-              </Alert> : ''}
+          {(step > 1 && alertSearch) ?
+            <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
+              <Alert.Heading>No Search Result</Alert.Heading>
+              <div>Please modify your search words</div>
+            </Alert> : ''}
 
-            {alertNWErr ? 
-              <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
-                <Alert.Heading>Network Error</Alert.Heading>
-                <div>Please try again in a moment</div>
-              </Alert> : ""
-            }
+          {alertNWErr ? 
+            <Alert variant="danger" style={{position: "absolute", right: "18px", bottom: 0, width: "350px", height: "90px"}}>
+              <Alert.Heading>Network Error</Alert.Heading>
+              <div>Please try again in a moment</div>
+            </Alert> : ""
+          }
 
-          </StepsContainer>
-        </ScrollWidthControlDiv>
-      </OverflowDiv>
+        </StepsContainer>
+      </OverflowControlDiv>
     </div>
   );
 }

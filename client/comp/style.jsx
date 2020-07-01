@@ -116,13 +116,12 @@ export const WelcomeButton = styled.button`
 /*
   StepWindow.jsx
 */
-export const OverflowDiv = styled.div`
+export const OverflowControlDiv = styled.div`
   overflow: auto;
   scroll-behavior: smooth;
-`;
-
-export const ScrollWidthControlDiv = styled.div`
-  width: ${innerWidth - 18}px;
+  margin-right: 18px;
+  margin-left: 18px;
+  text-align: center;
 `;
 
 export const StepsContainer = styled.div`
@@ -130,6 +129,7 @@ export const StepsContainer = styled.div`
   height: ${innerHeight - 60}px;
   width: 600px;
   margin: auto;
+  text-align: left;
 `;
 
 /*
