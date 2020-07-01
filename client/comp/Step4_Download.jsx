@@ -58,19 +58,19 @@ export default function Step4_Download({ forwardRef, step, dlOption, downloadOnC
       <SingleStepContents>
         <SingleStepSubTitle>Choose file name you want download with:</SingleStepSubTitle>
         <form id="radio-fileName">
-          <div>
+          <div id="radio-original">
             <input className="radio-original" type="radio" name="dlOption" value="original" checked={radioStatus[0]} onChange={handleRadioOnEvents}/>
             <span className="radio-original" onClick={handleRadioOnEvents}>&nbsp; original file name:</span><br/>
             <RadioTip className="radio-original" onClick={handleRadioOnEvents}>{dlOption.original}</RadioTip>
           </div>
 
-          <div>
+          <div id="radio-artistTitle">
             <input className="radio-artistTitle" type="radio" name="dlOption" value="artistTitle" checked={radioStatus[1]} onChange={handleRadioOnEvents}/>
             <span className="radio-artistTitle" onClick={handleRadioOnEvents}>&nbsp; (artist) - (title).(ext.):</span><br/>
             <RadioTip className="radio-artistTitle" onClick={handleRadioOnEvents}>{dlOption.artistTitle}</RadioTip>
           </div>
 
-          <div>
+          <div id="radio-customName">
             <input className="radio-customName" type="radio" name="dlOption" value="customName" checked={radioStatus[2]} onChange={handleRadioOnEvents}/>
             <span className="radio-customName" onClick={handleRadioOnEvents}>&nbsp; custom name:</span><br/>
             
@@ -85,6 +85,7 @@ export default function Step4_Download({ forwardRef, step, dlOption, downloadOnC
           </div>
         </form>
       </SingleStepContents>
+      
       <div style={{textAlign: "center", marginTop: "30px"}}>
         <LastStepButton form="radio-fileName" onClick={(e) => downloadOnClick(e, fileName)}>Download File</LastStepButton>
       </div>
