@@ -6,9 +6,11 @@ import { Form, Col } from 'react-bootstrap';
 import { SingleStepSubTitle, NextStepButtonContainer, NextStepButton } from './style.jsx';
 
 export default function SearchForm({ searchOnITunesAPI }) {
+  // state related to text input field
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
 
+  // event listner to handle change in text input field
   let handleOnChange = (e) => {
     if(e.target.id === 'title'){
       setTitle(e.target.value);
@@ -30,7 +32,7 @@ export default function SearchForm({ searchOnITunesAPI }) {
           </Col>
         </Form.Row>
       </Form>
-      
+
       <NextStepButtonContainer>
         <NextStepButton form="searchForm" onClick={(e)=>{searchOnITunesAPI(e, artist, title)}}>Search</NextStepButton>
       </NextStepButtonContainer>
