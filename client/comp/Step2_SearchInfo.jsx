@@ -14,7 +14,7 @@ export default function Step2_SearchInfo({ forwardRef, step, searchOnITunesAPI }
   let iconTheme = (step === 2) ? "material-icons" : "material-icons-outlined";
 
   return (
-    <SingleStepContainer ref={forwardRef}>
+    <SingleStepContainer id="step2" ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_two</StepIcon>Search Song Information</SingleStepTitle>
       <SingleStepContents>
         <SearchForm searchOnITunesAPI={searchOnITunesAPI} />

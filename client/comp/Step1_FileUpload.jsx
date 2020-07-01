@@ -28,7 +28,7 @@ export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick}
   }
  
   return (
-    <SingleStepContainer ref={forwardRef}>
+    <SingleStepContainer id="step1" ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_one</StepIcon>Upload audio file you want edit</SingleStepTitle>
       <SingleStepContents>
         <SingleStepSubTitle>The file size has to be less than 12 MB</SingleStepSubTitle>

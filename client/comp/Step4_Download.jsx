@@ -50,11 +50,10 @@ export default function Step4_Download({ forwardRef, step, dlOption, downloadOnC
     if(!radioStatus[2]) {
       setRadioStatus([false, false, true]);
     }
-    
   };
 
   return (
-    <SingleStepContainer ref={forwardRef}>
+    <SingleStepContainer id="step4" ref={forwardRef}>
       <SingleStepTitle><StepIcon className={iconTheme} instList={true}>looks_4</StepIcon>Download File</SingleStepTitle>
       <SingleStepContents>
         <SingleStepSubTitle>Choose file name you want download with:</SingleStepSubTitle>
