@@ -66,9 +66,7 @@ export default function StepWindow({ pageControlOnClick }) {
     Event Lisnters with http request (used in submodule/subelement)
   */
   // for Step 1: upload file to server
-  let uploadFileOnClick = (e, fileInputRef, cb, cbIn) => {
-    e.preventDefault();
-
+  let uploadFileOnClick = (e, fileInputRef, callback) => {
     if(alertNWErr){ // hide network alert if still shown
       setAlertNWErr(false); 
     }
@@ -76,6 +74,8 @@ export default function StepWindow({ pageControlOnClick }) {
     let audioFile = fileInputRef.current.files[0];
     
     if(audioFile.size < 12000000) { // check the size of file
+      e.persist(); // persist to be used in callback function
+
       if(alertUL){ // hide file size alert if still shown
         setAlertUL(false); 
       }
@@ -102,7 +102,7 @@ export default function StepWindow({ pageControlOnClick }) {
           }
           
           // disable the submit button (such function is declared in step 1 submodule)
-          cb(cbIn);
+          callback(e);
 
           // scroll to step 2
           stepRefs[0].current.scrollTo(stepRefs[1].current.offsetLeft - 15, stepRefs[2].current.offsetTop - stepRefs[1].current.offsetTop + 20);

@@ -14,18 +14,17 @@ import { StepIcon,
 export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick} ) {
   // Hook
   let [buttonDisabled, setButtonDisabled] = useState(true); // handles disabled attribute of button
-  let fileInputRef = useRef(); // to reference file input type
+  let fileInputRef = useRef(); // to reference file input
   
   let iconTheme = (step === 1) ? "material-icons" : "material-icons-outlined";
 
-  // event listner to disable/enable button
-  let enableButtonOnChange = () => {
-    if(fileInputRef.current.files.length === 1) {
-      setButtonDisabled(false)
+  // event listner to enable/disable button
+  let enableButtonOnChange = (e) => {
+    if(e.type === 'change' && fileInputRef.current.files.length === 1) {
+      setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
     }
-    
   }
  
   return (
@@ -38,7 +37,7 @@ export default function Step1_FileUpload( { forwardRef, step, uploadFileOnClick}
         </InputFileContainer>
 
         <NextStepButtonContainer>
-          <NextStepButton onClick={(e) => uploadFileOnClick(e, fileInputRef, setButtonDisabled, true)} disabled={buttonDisabled}>Upload File</NextStepButton>
+          <NextStepButton onClick={(e) => uploadFileOnClick(e, fileInputRef, enableButtonOnChange)} disabled={buttonDisabled}>Upload File</NextStepButton>
         </NextStepButtonContainer>
       </SingleStepContents>
     </SingleStepContainer>
