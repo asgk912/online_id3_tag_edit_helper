@@ -7,7 +7,7 @@ import { Title, MusicIcon, InfoContainer, WelcomeButtonContainer, WelcomeButton 
 // React element
 export default function Welcome({ pageControlOnClick }) {
   return (
-    <div>
+    <>
       <Title><MusicIcon className="material-icons-outlined" fs="48px">library_music</MusicIcon> Online ID3 Tag Edit Helper</Title>
       <InfoContainer>
         <p>Welcome! This is an web application, which will help you edit ID3 tags of your audio file.</p>
@@ -25,7 +25,7 @@ export default function Welcome({ pageControlOnClick }) {
           <WelcomeButton id='welcome' onClick={pageControlOnClick}>Start</WelcomeButton>
         </WelcomeButtonContainer>
       </InfoContainer>
-    </div>
+    </>
   );
 }
 
