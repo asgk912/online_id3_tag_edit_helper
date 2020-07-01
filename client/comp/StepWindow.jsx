@@ -15,10 +15,10 @@ import { OverflowDiv, ScrollWidthControlDiv, StepsContainer } from './style.jsx'
 export default function StepWindow({ pageControlOnClick }) {
   
   /* 
-    Hooks
+    States and Refs
   */
-  // id of uploaded file in database
-  const [id, setID] = useState(""); 
+  // id of uploaded file in database (ref is used instead of state because componentWillUnmount-like effect use initial value of id )
+  const id = useRef();
   // state to control which steps are shown
   const [step, setStep] = useState(1);
 
@@ -31,25 +31,13 @@ export default function StepWindow({ pageControlOnClick }) {
   const [infoData, setInfoData] = useState([]);
   const [dlOption, setDLOption] = useState({original: 'original.mp3', artistTitle: '(artist) - (title).mp3', extension: '.mp3'});
 
-  // Refs to scroll window
+  // Refs use in scrolling window
   const stepRefs = Array(5).fill(0).map(() => useRef(null));
 
-  // React useeffect
-  useEffect(()=> { 
-    if(alertUL) { // turn off upload alert in 3s
-      setTimeout(() => setAlertUL(false), 3000);
-    }
-
-    if(alertSearch) { // turn off search alert in 3s
-      setTimeout(() => setAlertSearch(false), 3000);
-    }
-
-    if(alertNWErr) { // turn off search alert in 3s
-      setTimeout(() => setAlertNWErr(false), 3000);
-    }
-  }, [alertUL, alertSearch, alertNWErr]);
-
-  // event listner for scroll
+  /*
+    Event Listners without https requests
+  */
+  // scroll window
   let scrollOnClickNavBar = (e) => {
     let index = parseInt(e.target.classList[3][4]);
     
@@ -58,23 +46,25 @@ export default function StepWindow({ pageControlOnClick }) {
     }
   };
 
-  /*
-    Event Listners with http request
-  */
+  // for on component unmount or window before unmount
   let deleteFileaOnUnload = () => {
-    if(id.length > 0) {
+    if(id.current) {
       axios({ // send request to delete previously uploaded file
         url: '/api/v1/file',
         method: 'delete',
-        data: { id }
+        data: { id: id.current }
       })
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
   };
 
-  window.addEventListener("beforeunload", deleteFileaOnUnload)
+  // window before unload
+  window.addEventListener("beforeunload", deleteFileaOnUnload);
 
+  /*
+    Event Lisnters with http request (used in submodule/subelement)
+  */
   // for Step 1: upload file to server
   let uploadFileOnClick = (e, fileInputRef, cb, cbIn) => {
     e.preventDefault();
@@ -95,13 +85,14 @@ export default function StepWindow({ pageControlOnClick }) {
       data.append('audio', audioFile);
 
       // post request with axios
-      axios.post('/api/v1/file', data, {
-        header: {
-          'Content-Type': 'multipart/form-data',
-        }
+      axios({
+        url: '/api/v1/file',
+        method: 'post',
+        data: data,
+        header: { 'Content-Type': 'multipart/form-data' }
       })
         .then((res) => {
-          setID(res.data.id); // set id;
+          id.current = res.data.id;
 
           // control which step to be shown based
           if(step === 1) {            // file is uploaded for the first time
@@ -185,7 +176,7 @@ export default function StepWindow({ pageControlOnClick }) {
     axios({ // send selected tags to server
       url: '/api/v1/selection',
       method: 'post',
-      data: { id, newTags }
+      data: { id: id.current, newTags }
     })
       .then(({ data }) => { // update filename donwload option
         let extension = data.original.substring(data.original.length - 4)
@@ -216,12 +207,31 @@ export default function StepWindow({ pageControlOnClick }) {
       axios({ // first send updated filename
         url: '/api/v1/fileName',
         method: 'post',
-        data: { id, fileName }
+        data: { id: id.current, fileName }
       })
-        .then(()=> window.open(`/api/v1/file/?id=${id}`)) // download file
+        .then(()=> window.open(`/api/v1/file/?id=${id.current}`)) // download file
         .catch(() => setAlertNWErr(true));
     }
   }
+
+  /* 
+    Effects
+  */
+
+  // component will unmount
+  useEffect(() => (deleteFileaOnUnload), []);
+
+ // hide any alerts in 3s
+  useEffect(()=> { 
+    // upload alert
+    if(alertUL) setTimeout(() => setAlertUL(false), 3000);
+
+    // search alert
+    if(alertSearch) setTimeout(() => setAlertSearch(false), 3000);
+
+    // network error
+    if(alertNWErr) setTimeout(() => setAlertNWErr(false), 3000);
+  }, [alertUL, alertSearch, alertNWErr]);
 
   return (
     <div>
