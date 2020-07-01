@@ -234,7 +234,7 @@ export default function StepWindow({ pageControlOnClick }) {
   }, [alertUL, alertSearch, alertNWErr]);
 
   return (
-    <div>
+    <>
       <NavigationBar step={step} pageControlOnClick={pageControlOnClick} deleteFileaOnUnload={deleteFileaOnUnload} scrollOnClickNavBar={scrollOnClickNavBar}/>
 
       <OverflowControlDiv id="steps" ref={stepRefs[0]}>
@@ -273,7 +273,7 @@ export default function StepWindow({ pageControlOnClick }) {
 
         </StepsContainer>
       </OverflowControlDiv>
-    </div>
+    </>
   );
 }
 
