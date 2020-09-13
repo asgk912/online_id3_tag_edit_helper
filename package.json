@@ -17,7 +17,7 @@
     "app",
     "react",
     "id3 tag",
-    "spotify-api"
+    "iTunes-api"
   ],
   "author": "Albert Kim",
   "license": "ISC",
