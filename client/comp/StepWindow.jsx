@@ -60,7 +60,7 @@ export default function StepWindow({ pageControlOnClick }) {
   };
 
   // window before unload
-  window.addEventListener("beforeunload", deleteFileaOnUnload);
+  // window.addEventListener("beforeunload", deleteFileaOnUnload);
 
   /*
     Event Lisnters with http request (used in submodule/subelement)
